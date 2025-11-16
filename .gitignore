@@ -12,11 +12,7 @@ dist
 dist-ssr
 *.local
 
-# Build output (now in root)
-/index.html
-/assets/
-/hero.jpeg
-/map.jpg
+
 
 # Editor directories and files
 .vscode/*
