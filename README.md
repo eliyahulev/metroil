@@ -1,30 +1,30 @@
-# מטרו ישראל - Metro Israel Website
+# Metro Israel - Metro Israel Website
 
-אתר אינטרנט בעברית לפרויקט המטרו החדש בישראל.
+Website for the new metro project in Israel.
 
-## התקנה והרצה
+## Installation and Running
 
 ```bash
-# התקנת תלויות
+# Install dependencies
 npm install
 
-# הרצת שרת פיתוח
+# Run development server
 npm run dev
 
-# בניית גרסת ייצור
+# Build production version
 npm run build
 
-# תצוגה מקדימה של גרסת ייצור
+# Preview production version
 npm run preview
 ```
 
-## טכנולוגיות
+## Technologies
 
-- Vite - כלי בנייה מהיר
-- React - ספריית UI
-- CSS3 - עיצוב מודרני ורספונסיבי
+- Vite - Fast build tool
+- React - UI library
+- CSS3 - Modern and responsive design
 
-## מבנה הפרויקט
+## Project Structure
 
 ```
 metro/
@@ -39,4 +39,3 @@ metro/
 ├── package.json
 └── vite.config.js
 ```
-
