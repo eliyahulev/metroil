@@ -1,20 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css'
 import heroImage from './assets/hero.jpeg'
 import mapImage from './assets/map.jpg'
 
 function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const navItems = [
+    { href: '#about', label: 'אודות' },
+    { href: '#project', label: 'הפרויקט' },
+    { href: '#stats', label: 'נתונים' },
+    { href: '#lines', label: 'קווים' },
+    { href: '#cities', label: 'ערים' },
+  ]
+
+  const closeMenu = () => setIsMenuOpen(false)
+
   return (
     <div className="app">
       <header className="header">
         <div className="container">
           <h1 className="logo">מטרו ישראל</h1>
-          <nav className="nav">
-            <a href="#about">אודות</a>
-            <a href="#project">הפרויקט</a>
-            <a href="#stats">נתונים</a>
-            <a href="#lines">קווים</a>
-            <a href="#cities">ערים</a>
+          <button
+            className={`nav-toggle${isMenuOpen ? ' open' : ''}`}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-expanded={isMenuOpen}
+            aria-label="פתח תפריט ניווט"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <nav className={`nav${isMenuOpen ? ' open' : ''}`}>
+            {navItems.map((item) => (
+              <a key={item.href} href={item.href} onClick={closeMenu}>
+                {item.label}
+              </a>
+            ))}
           </nav>
         </div>
       </header>
@@ -190,4 +211,3 @@ function App() {
 }
 
 export default App
-
