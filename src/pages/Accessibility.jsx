@@ -1,46 +1,25 @@
 import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 
 function Accessibility() {
+  const { language } = useLanguage()
+  const t = translations[language]
+
   return (
     <div className="app">
       <Header />
       <section className="section" style={{ paddingTop: '6rem' }}>
         <div className="container">
-          <h2 className="section-title">הגדרות נגישות</h2>
+          <h2 className="section-title">{t.accessibility.title}</h2>
           <div className="info-content">
-            <p>
-              מטרו ישראל מחויבת להבטיח נגישות מלאה לאתר זה עבור כל המשתמשים, כולל
-              אנשים עם מוגבלויות. אנו פועלים בהתאם לחוק שוויון זכויות לאנשים עם
-              מוגבלות התשנ"ח-1998 ולתקנות נגישות השירות.
-            </p>
-            <p>
-              האתר נבנה בהתאם לתקן WCAG 2.1 ברמה AA, וכולל תכונות נגישות כגון: ניווט
-              מקלדת, תמיכה בקוראי מסך, ניגודיות צבעים מותאמת, וטקסט חלופי לתמונות.
-              תכונות נגישות זמינות כוללות: ניווט מלא באמצעות מקלדת, תמיכה בקוראי מסך
-              עבור משתמשים עם לקויות ראייה, ניגודיות צבעים גבוהה לקריאה נוחה, טקסט
-              חלופי לכל התמונות והגרפיקה, כותרות וסימונים סמנטיים לניווט קל, וגודל
-              טקסט ניתן להגדלה.
-            </p>
-            <p>
-              ניתן לנווט באתר במלואו באמצעות מקלדת בלבד. השתמשו בכפתור Tab למעבר
-              בין אלמנטים, Enter לביצוע פעולות, ו-Escape לסגירת תפריטים.
-            </p>
-            <p>
-              ניתן להגדיל את הטקסט באתר באמצעות הגדרות הדפדפן (Ctrl/Cmd + +). כמו
-              כן, רוב הדפדפנים המודרניים תומכים בהגדרות נגישות נוספות שניתן להפעיל
-              בהגדרות הדפדפן.
-            </p>
-            <p>
-              אם נתקלת בבעיית נגישות באתר, נשמח לשמוע ממך. אנא צור קשר עמנו ונפעל
-              לתיקון הבעיה בהקדם האפשרי. אנו מחויבים לשפר את הנגישות באופן מתמיד.
-            </p>
-            <p>
-              אנו ממשיכים לעבוד על שיפור הנגישות של האתר ומוסיפים תכונות חדשות
-              באופן קבוע. אנו עוקבים אחר התקנים העדכניים ביותר ומעדכנים את האתר
-              בהתאם.
-            </p>
+            {t.accessibility.content.map((paragraph, index) => (
+              <p key={index}>
+                {paragraph}
+              </p>
+            ))}
           </div>
         </div>
       </section>
@@ -50,4 +29,3 @@ function Accessibility() {
 }
 
 export default Accessibility
-

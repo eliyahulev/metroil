@@ -1,22 +1,27 @@
 import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 import heroImage from '../assets/hero.jpeg'
 import mapImage from '../assets/map.jpg'
 
 function Home() {
+  const { language } = useLanguage()
+  const t = translations[language]
+
   return (
     <div className="app">
       <Header />
       <section className="hero">
         <div className="hero-image-wrapper">
-          <img src={heroImage} alt="תחנת מטרו ישראל" className="hero-image" />
+          <img src={heroImage} alt={t.home.hero.alt} className="hero-image" />
           <div className="hero-overlay">
             <div className="hero-content">
-              <h2 className="hero-title">מטרו ישראל</h2>
-              <p className="hero-subtitle">פרויקט התחבורה הגדול בישראל</p>
+              <h2 className="hero-title">{t.home.hero.title}</h2>
+              <p className="hero-subtitle">{t.home.hero.subtitle}</p>
               <p className="hero-description">
-                חיבור גוש דן באמצעות רשת מטרו מודרנית ויעילה
+                {t.home.hero.description}
               </p>
             </div>
           </div>
@@ -25,22 +30,18 @@ function Home() {
 
       <section id="project" className="section">
         <div className="container">
-          <h2 className="section-title">אודות הפרויקט</h2>
+          <h2 className="section-title">{t.home.project.title}</h2>
           <div className="content-grid">
             <div className="content-card">
-              <h3>חזון הפרויקט</h3>
+              <h3>{t.home.project.vision.title}</h3>
               <p>
-                פרויקט המטרו אמור להביא מזור משמעותי לגוש הדן העמוס והפקוק.
-                המטרו צפוי לחבר בין 24 רשויות, אזורי תעסוקה, מוסדות חינוך ורפואה
-                ומוקדי מגורים, ולהפוך את התחבורה הציבורית לנגישה ויעילה יותר.
+                {t.home.project.vision.text}
               </p>
             </div>
             <div className="content-card">
-              <h3>היקף הפרויקט</h3>
+              <h3>{t.home.project.scope.title}</h3>
               <p>
-                הפרויקט כולל שלושה קווים עיקריים שיפעלו ברחבי גוש דן, עם 300 ק"מ
-                של מנהרות ו-109 תחנות תת-קרקעיות. לפי נת"ע, עתידות להתבצע בהם
-                כ-600 מיליון נסיעות בשנה.
+                {t.home.project.scope.text}
               </p>
             </div>
           </div>
@@ -49,31 +50,31 @@ function Home() {
 
       <section id="stats" className="section stats-section">
         <div className="container">
-          <h2 className="section-title">נתוני הפרויקט</h2>
+          <h2 className="section-title">{t.home.stats.title}</h2>
           <div className="stats-grid">
             <div className="stat-card">
               <div className="stat-number">3</div>
-              <div className="stat-label">קווים</div>
+              <div className="stat-label">{t.home.stats.lines}</div>
             </div>
             <div className="stat-card">
               <div className="stat-number">24</div>
-              <div className="stat-label">רשויות מקומיות</div>
+              <div className="stat-label">{t.home.stats.municipalities}</div>
             </div>
             <div className="stat-card">
               <div className="stat-number">300</div>
-              <div className="stat-label">ק"מ מנהרות</div>
+              <div className="stat-label">{t.home.stats.tunnels}</div>
             </div>
             <div className="stat-card">
               <div className="stat-number">109</div>
-              <div className="stat-label">תחנות תת-קרקעיות</div>
+              <div className="stat-label">{t.home.stats.stations}</div>
             </div>
             <div className="stat-card">
               <div className="stat-number">600M</div>
-              <div className="stat-label">נסיעות בשנה</div>
+              <div className="stat-label">{t.home.stats.trips}</div>
             </div>
             <div className="stat-card">
               <div className="stat-number">65B</div>
-              <div className="stat-label">₪ היקף הפרויקט</div>
+              <div className="stat-label">{t.home.stats.budget}</div>
             </div>
           </div>
         </div>
@@ -81,51 +82,51 @@ function Home() {
 
       <section id="lines" className="section lines-section">
         <div className="container">
-          <h2 className="section-title">קווי המטרו</h2>
+          <h2 className="section-title">{t.home.lines.title}</h2>
           <p className="section-description">
-            שלושת קווי המטרו שיחברו את גוש דן
+            {t.home.lines.description}
           </p>
           <div className="lines-content">
             <div className="lines-info">
               <div className="line-card">
                 <div className="line-header">
                   <span className="line-number">M1</span>
-                  <h3 className="line-title">קו M1</h3>
+                  <h3 className="line-title">{t.home.lines.line} M1</h3>
                 </div>
                 <div className="line-details">
                   <div className="line-length">
                     <span className="length-value">85</span>
-                    <span className="length-unit">קילומטר</span>
+                    <span className="length-unit">{t.home.lines.kilometer}</span>
                   </div>
                 </div>
               </div>
               <div className="line-card">
                 <div className="line-header">
                   <span className="line-number">M2</span>
-                  <h3 className="line-title">קו M2</h3>
+                  <h3 className="line-title">{t.home.lines.line} M2</h3>
                 </div>
                 <div className="line-details">
                   <div className="line-length">
                     <span className="length-value">26</span>
-                    <span className="length-unit">קילומטר</span>
+                    <span className="length-unit">{t.home.lines.kilometer}</span>
                   </div>
                 </div>
               </div>
               <div className="line-card">
                 <div className="line-header">
                   <span className="line-number">M3</span>
-                  <h3 className="line-title">קו M3</h3>
+                  <h3 className="line-title">{t.home.lines.line} M3</h3>
                 </div>
                 <div className="line-details">
                   <div className="line-length">
                     <span className="length-value">39</span>
-                    <span className="length-unit">קילומטר</span>
+                    <span className="length-unit">{t.home.lines.kilometer}</span>
                   </div>
                 </div>
               </div>
             </div>
             <div className="map-container">
-              <img src={mapImage} alt="מפת קווי המטרו" className="metro-map" />
+              <img src={mapImage} alt={t.home.lines.mapAlt} className="metro-map" />
             </div>
           </div>
         </div>
@@ -133,37 +134,28 @@ function Home() {
 
       <section id="cities" className="section">
         <div className="container">
-          <h2 className="section-title">הערים המחוברות</h2>
+          <h2 className="section-title">{t.home.cities.title}</h2>
           <p className="section-description">
-            הפרויקט יחבר את הערים הבאות בגוש דן:
+            {t.home.cities.description}
           </p>
           <div className="cities-grid">
-            <div className="city-card">תל אביב</div>
-            <div className="city-card">רמת גן</div>
-            <div className="city-card">גבעתיים</div>
-            <div className="city-card">חולון</div>
-            <div className="city-card">בת ים</div>
-            <div className="city-card">ראשון לציון</div>
-            <div className="city-card">פתח תקווה</div>
-            <div className="city-card">קריית אונו</div>
-            <div className="city-card">אור יהודה</div>
-            <div className="city-card">ועוד 15 רשויות</div>
+            {t.home.cities.cityList.map((city, index) => (
+              <div key={index} className="city-card">{city}</div>
+            ))}
+            <div className="city-card">{t.home.cities.andMore}</div>
           </div>
         </div>
       </section>
 
       <section className="section info-section">
         <div className="container">
-          <h2 className="section-title">מידע נוסף</h2>
+          <h2 className="section-title">{t.home.info.title}</h2>
           <div className="info-content">
             <p>
-              במהלך השנה החולפת נשלחו כ-21 אלף הודעות הפקעה לבעלי קרקעות על תוואי
-              המסילות. ההפקעות יבוצעו בערים חולון, בת ים, אור יהודה, קריית אונו
-              וראשון לציון, גבעתיים, תל אביב ופתח תקווה.
+              {t.home.info.text1}
             </p>
             <p>
-              הפרויקט מנוהל על ידי נת"ע (נתיבי תחבורה עירוניים) ומשרד התחבורה,
-              ומציע פתרון תחבורתי מתקדם שישפר משמעותית את איכות החיים בגוש דן.
+              {t.home.info.text2}
             </p>
           </div>
         </div>
@@ -175,4 +167,3 @@ function Home() {
 }
 
 export default Home
-
