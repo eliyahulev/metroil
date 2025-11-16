@@ -1,5 +1,6 @@
 import React from 'react'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 function HowItsDone() {
   const timelineItems = [
@@ -64,11 +65,7 @@ function HowItsDone() {
         </div>
       </section>
 
-      <footer className="footer">
-        <div className="container">
-          <p>&copy; 2024 מטרו ישראל - פרויקט התחבורה הגדול בישראל</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
