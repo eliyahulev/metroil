@@ -1316,6 +1316,11 @@
   min-height: calc(100vh - 200px);
 }
 
+.post-page .container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .back-link {
   display: inline-flex;
   align-items: center;
@@ -1378,7 +1383,6 @@
 }
 
 .post-content {
-  max-width: 800px;
   color: #b8bcc8;
   font-size: 1.1rem;
   line-height: 1.9;
