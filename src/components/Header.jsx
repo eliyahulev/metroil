@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
 import LanguageSwitcher from './LanguageSwitcher'
@@ -9,6 +9,7 @@ function Header() {
   const t = translations[language]
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
   const navItems = [
     { href: '#project', label: t.header.nav.about },
     { href: '#project', label: t.header.nav.project },
@@ -17,14 +18,50 @@ function Header() {
     { href: '#cities', label: t.header.nav.cities },
     { path: '/how-its-done', label: t.header.nav.howItsDone },
     { path: '/news', label: t.header.nav.news },
+    { href: '#contact', label: t.header.nav.contact },
   ]
 
   const closeMenu = () => setIsMenuOpen(false)
 
-  const handleSectionClick = (href) => {
+  const scrollToSection = (hash) => {
+    const scrollToElement = () => {
+      const element = document.querySelector(hash)
+      if (element) {
+        const headerOffset = 80
+        const elementPosition = element.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+        return true
+      }
+      return false
+    }
+
+    if (scrollToElement()) {
+      return
+    }
+
+    let attempts = 0
+    const maxAttempts = 10
+    const interval = setInterval(() => {
+      attempts++
+      if (scrollToElement() || attempts >= maxAttempts) {
+        clearInterval(interval)
+      }
+    }, 50)
+  }
+
+  const handleSectionClick = (href, e) => {
+    e.preventDefault()
     closeMenu()
+    
     if (location.pathname !== '/') {
-      window.location.href = `/${href}`
+      navigate('/' + href)
+    } else {
+      scrollToSection(href)
+      window.history.pushState(null, '', href)
     }
   }
 
@@ -50,7 +87,7 @@ function Header() {
               <a
                 key={index}
                 href={item.href}
-                onClick={() => handleSectionClick(item.href)}
+                onClick={(e) => handleSectionClick(item.href, e)}
               >
                 {item.label}
               </a>
