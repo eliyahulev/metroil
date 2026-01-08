@@ -6,6 +6,9 @@ import Home from './pages/Home'
 import HowItsDone from './pages/HowItsDone'
 import Privacy from './pages/Privacy'
 import Accessibility from './pages/Accessibility'
+import News from './pages/News'
+import Post from './pages/Post'
+import Admin from './pages/Admin'
 import ScrollToTop from './components/ScrollToTop'
 
 function App() {
@@ -18,6 +21,9 @@ function App() {
           <Route path="/how-its-done" element={<HowItsDone />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/accessibility" element={<Accessibility />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/news/:id" element={<Post />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </Router>
     </LanguageProvider>

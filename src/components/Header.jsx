@@ -16,6 +16,7 @@ function Header() {
     { href: '#lines', label: t.header.nav.lines },
     { href: '#cities', label: t.header.nav.cities },
     { path: '/how-its-done', label: t.header.nav.howItsDone },
+    { path: '/news', label: t.header.nav.news },
   ]
 
   const closeMenu = () => setIsMenuOpen(false)
