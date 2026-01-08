@@ -69,6 +69,20 @@ export const translations = {
         text2:
           'הפרויקט מנוהל על ידי נת"ע (נתיבי תחבורה עירוניים) ומשרד התחבורה, ומציע פתרון תחבורתי מתקדם שישפר משמעותית את איכות החיים בגוש דן.',
       },
+      contact: {
+        title: "צור קשר",
+        description: "יש לכם שאלות? נשמח לשמוע מכם",
+        name: "שם מלא",
+        email: "כתובת אימייל",
+        message: "הודעה",
+        submit: "שלח הודעה",
+        sending: "שולח...",
+        success: "ההודעה נשלחה בהצלחה! נחזור אליכם בהקדם.",
+        error: "אירעה שגיאה. אנא נסו שוב.",
+        namePlaceholder: "הכניסו את שמכם",
+        emailPlaceholder: "הכניסו את כתובת האימייל",
+        messagePlaceholder: "כתבו את הודעתכם כאן...",
+      },
     },
     howItsDone: {
       title: "איך זה נעשה",
@@ -206,6 +220,20 @@ export const translations = {
           "Over the past year, approximately 21,000 expropriation notices were sent to landowners along the rail routes. The expropriations will be carried out in the cities of Holon, Bat Yam, Or Yehuda, Kiryat Ono, Rishon LeZion, Givatayim, Tel Aviv, and Petah Tikva.",
         text2:
           "The project is managed by NTA (Metropolitan Mass Transit System) and the Ministry of Transportation, offering an advanced transportation solution that will significantly improve the quality of life in Gush Dan.",
+      },
+      contact: {
+        title: "Contact Us",
+        description: "Have questions? We'd love to hear from you",
+        name: "Full Name",
+        email: "Email Address",
+        message: "Message",
+        submit: "Send Message",
+        sending: "Sending...",
+        success: "Message sent successfully! We'll get back to you soon.",
+        error: "An error occurred. Please try again.",
+        namePlaceholder: "Enter your name",
+        emailPlaceholder: "Enter your email address",
+        messagePlaceholder: "Write your message here...",
       },
     },
     howItsDone: {

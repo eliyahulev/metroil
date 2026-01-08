@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -9,6 +9,35 @@ import mapImage from '../assets/map.jpg'
 function Home() {
   const { language } = useLanguage()
   const t = translations[language]
+
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  const [status, setStatus] = useState({ submitting: false, success: false, error: false })
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setStatus({ submitting: true, success: false, error: false })
+
+    try {
+      const response = await fetch('https://formspree.io/f/mdakqbqj', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        setStatus({ submitting: false, success: true, error: false })
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        setStatus({ submitting: false, success: false, error: true })
+      }
+    } catch (error) {
+      setStatus({ submitting: false, success: false, error: true })
+    }
+  }
 
   return (
     <div className="app">
@@ -158,6 +187,64 @@ function Home() {
               {t.home.info.text2}
             </p>
           </div>
+        </div>
+      </section>
+
+      <section id="contact" className="section contact-section">
+        <div className="container">
+          <h2 className="section-title">{t.home.contact.title}</h2>
+          <p className="section-description">{t.home.contact.description}</p>
+          <form className="contact-form" onSubmit={handleSubmit}>
+            {/* Honeypot field - hidden from users, catches bots */}
+            <input
+              type="text"
+              name="_gotcha"
+              style={{ display: 'none' }}
+              tabIndex="-1"
+              autoComplete="off"
+            />
+            <div className="form-group">
+              <label htmlFor="name">{t.home.contact.name}</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder={t.home.contact.namePlaceholder}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">{t.home.contact.email}</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder={t.home.contact.emailPlaceholder}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="message">{t.home.contact.message}</label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder={t.home.contact.messagePlaceholder}
+                rows="5"
+                required
+              />
+            </div>
+            <button type="submit" className="submit-btn" disabled={status.submitting}>
+              {status.submitting ? t.home.contact.sending : t.home.contact.submit}
+            </button>
+            {status.success && <p className="form-message success">{t.home.contact.success}</p>}
+            {status.error && <p className="form-message error">{t.home.contact.error}</p>}
+          </form>
         </div>
       </section>
 
