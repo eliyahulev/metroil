@@ -24,13 +24,13 @@ function Header() {
   const closeMenu = () => setIsMenuOpen(false)
 
   const handleLogoClick = (e) => {
+    e.preventDefault()
     closeMenu()
     if (location.pathname !== '/') {
       navigate('/')
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      window.history.replaceState(null, '', '/')
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.history.replaceState(null, '', '/')
   }
 
   const scrollToSection = (hash) => {
