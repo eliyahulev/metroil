@@ -23,6 +23,16 @@ function Header() {
 
   const closeMenu = () => setIsMenuOpen(false)
 
+  const handleLogoClick = (e) => {
+    closeMenu()
+    if (location.pathname !== '/') {
+      navigate('/')
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      window.history.replaceState(null, '', '/')
+    }
+  }
+
   const scrollToSection = (hash) => {
     const scrollToElement = () => {
       const element = document.querySelector(hash)
@@ -68,7 +78,7 @@ function Header() {
   return (
     <header className="header">
       <div className="container">
-        <Link to="/" onClick={closeMenu} style={{ textDecoration: 'none' }}>
+        <Link to="/" onClick={handleLogoClick} style={{ textDecoration: 'none' }}>
           <h1 className="logo">{t.header.logo}</h1>
         </Link>
         <button
