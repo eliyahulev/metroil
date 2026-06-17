@@ -85,19 +85,49 @@ function Admin() {
     }
   }
 
+  // A URL is "ours" if it already lives in our Firebase Storage bucket.
+  const isExternalImage = (url) =>
+    typeof url === 'string' &&
+    url.startsWith('http') &&
+    !url.includes('firebasestorage.googleapis.com') &&
+    !url.includes('storage.googleapis.com')
+
+  // Best-effort: download an external image in the browser and re-upload it to
+  // our Storage. This works for CORS-permissive hosts; others throw and we fall
+  // back to keeping the external URL (the rehost-images script catches those).
+  const rehostExternalImage = async (url) => {
+    const res = await fetch(url)
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const blob = await res.blob()
+    if (!blob.type.startsWith('image/')) throw new Error('not an image')
+    const ext = (blob.type.split('/')[1] || 'jpg').split('+')[0]
+    const storageRef = ref(storage, `posts/${Date.now()}_rehosted.${ext}`)
+    await uploadBytes(storageRef, blob, { contentType: blob.type })
+    return await getDownloadURL(storageRef)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
 
     try {
+      const data = { ...formData }
+      if (isExternalImage(data.image)) {
+        try {
+          data.image = await rehostExternalImage(data.image)
+        } catch (err) {
+          console.warn('Could not self-host external image:', err)
+          alert('Post saved, but the external image could not be downloaded automatically (usually blocked by the source site). It will be pulled in next time you run the rehost-images migration script.')
+        }
+      }
       if (editingPost) {
         await updateDoc(doc(db, 'posts', editingPost.id), {
-          ...formData,
+          ...data,
           updatedAt: Timestamp.now()
         })
       } else {
         await addDoc(collection(db, 'posts'), {
-          ...formData,
+          ...data,
           createdAt: Timestamp.now()
         })
       }
