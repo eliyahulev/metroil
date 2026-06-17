@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy, Timestamp } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { db, storage } from '../firebase'
+import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth'
+import { db, storage, auth } from '../firebase'
 
-const ADMIN_PASSWORD = 'metro2024' // Change this to your preferred password
+const ALLOWED_EMAILS = ['eliyahu.lev@gmail.com', 'tuvi2b@gmail.com']
 
 function Admin() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [password, setPassword] = useState('')
+  const [user, setUser] = useState(null)
+  const [authReady, setAuthReady] = useState(false)
+  const [authError, setAuthError] = useState('')
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
   const [editingPost, setEditingPost] = useState(null)
@@ -21,10 +23,10 @@ function Admin() {
   })
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (user) {
       fetchPosts()
     }
-  }, [isAuthenticated])
+  }, [user])
 
   const fetchPosts = async () => {
     try {
@@ -42,19 +44,27 @@ function Admin() {
     }
   }
 
-  const handleLogin = (e) => {
-    e.preventDefault()
-    if (password === ADMIN_PASSWORD) {
-      setIsAuthenticated(true)
-      localStorage.setItem('adminAuth', 'true')
-    } else {
-      alert('Incorrect password')
+  const handleLogin = async () => {
+    setAuthError('')
+    try {
+      const provider = new GoogleAuthProvider()
+      const result = await signInWithPopup(auth, provider)
+      if (!ALLOWED_EMAILS.includes(result.user.email)) {
+        await signOut(auth)
+        setAuthError('This account is not authorized.')
+      }
+    } catch (error) {
+      console.error('Login failed:', error)
+      setAuthError('Sign-in failed. Please try again.')
     }
   }
 
-  const handleLogout = () => {
-    setIsAuthenticated(false)
-    localStorage.removeItem('adminAuth')
+  const handleLogout = async () => {
+    try {
+      await signOut(auth)
+    } catch (error) {
+      console.error('Logout failed:', error)
+    }
   }
 
   const handleImageUpload = async (e) => {
@@ -135,28 +145,39 @@ function Admin() {
     setShowForm(false)
   }
 
-  // Check for saved auth on mount
+  // Subscribe to Firebase auth state on mount
   useEffect(() => {
-    if (localStorage.getItem('adminAuth') === 'true') {
-      setIsAuthenticated(true)
-    }
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser && !ALLOWED_EMAILS.includes(currentUser.email)) {
+        // Persisted session for a non-allowed account — reject it.
+        signOut(auth)
+        return
+      }
+      setUser(currentUser)
+      setAuthReady(true)
+    })
+    return unsubscribe
   }, [])
 
-  if (!isAuthenticated) {
+  if (!authReady) {
+    return (
+      <div className="admin-login">
+        <div className="admin-login-box">
+          <div className="loading">Loading...</div>
+        </div>
+      </div>
+    )
+  }
+
+  if (!user) {
     return (
       <div className="admin-login">
         <div className="admin-login-box">
           <h1>Admin Login</h1>
-          <form onSubmit={handleLogin}>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
-              autoFocus
-            />
-            <button type="submit">Login</button>
-          </form>
+          <button type="button" onClick={handleLogin}>
+            Sign in with Google
+          </button>
+          {authError && <p className="auth-error">{authError}</p>}
         </div>
       </div>
     )

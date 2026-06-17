@@ -1445,6 +1445,13 @@
   border-color: rgba(255, 107, 53, 0.6);
 }
 
+.admin-login-box .auth-error {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  margin: -0.5rem 0 1rem;
+  text-align: center;
+}
+
 .admin-login-box button {
   width: 100%;
   padding: 1rem;
