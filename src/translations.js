@@ -124,6 +124,7 @@ export const translations = {
     privacy: {
       title: "הגדרות פרטיות",
       content: [
+        'אתר זה הוא אתר עצמאי ואינו קשור בכל דרך שהיא לנת"ע (נתיבי תחבורה עירוניים בע"מ) או למשרד התחבורה. אין לאתר כל קשר רשמי, מסחרי או אחר לגופים אלה, וכל המידע המוצג בו הוא בלתי רשמי ואינו מהווה מקור רשמי של נת"ע או של משרד התחבורה.',
         'מטרו ישראל מחויבת להגנה על פרטיות המשתמשים באתר זה. מדיניות זו מסבירה כיצד אנו אוספים, משתמשים ומגנים על המידע האישי שלך בהתאם לחוק הגנת הפרטיות התשמ"א-1981 ולחוק הגנת הפרטיות (תיקון), התשנ"ו-1996.',
         'אנו אוספים מידע אישי רק כאשר אתה מספק אותו מרצונך, כגון בעת יצירת קשר או הרשמה לשירותים. המידע שנאסף עשוי לכלול שם, כתובת דוא"ל, מספר טלפון ופרטים נוספים הנדרשים לשירות.',
         "המידע האישי משמש אותנו למטרות הבאות: מתן שירותים, שיפור האתר, תקשורת עם המשתמשים, ועמידה בדרישות החוק. אנו לא מוכרים או מעבירים מידע אישי לצדדים שלישיים ללא הסכמתך המפורשת, למעט במקרים הנדרשים על פי חוק.",
@@ -290,6 +291,7 @@ export const translations = {
     privacy: {
       title: "Privacy Settings",
       content: [
+        "This is an independent website and is not affiliated in any way with NTA (Metropolitan Mass Transit System Ltd. / Netivei Ta'avura Ironiyim) or the Ministry of Transport. The website has no official, commercial, or other connection to these entities, and all information presented on it is unofficial and does not constitute an official source from NTA or the Ministry of Transport.",
         "Metro Israel is committed to protecting the privacy of users of this website. This policy explains how we collect, use, and protect your personal information in accordance with the Protection of Privacy Law, 5741-1981 and the Protection of Privacy Law (Amendment), 5756-1996.",
         "We collect personal information only when you provide it voluntarily, such as when contacting us or registering for services. The information collected may include name, email address, phone number, and other details required for the service.",
         "Personal information is used for the following purposes: providing services, improving the website, communicating with users, and complying with legal requirements. We do not sell or transfer personal information to third parties without your explicit consent, except in cases required by law.",
