@@ -4,7 +4,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth'
 import { db, storage, auth } from '../firebase'
 
-const ALLOWED_EMAILS = ['eliyahu.lev@gmail.com', 'tuvi2b@gmail.com']
+const ALLOWED_EMAILS = ['eliyahu.lev@gmail.com', 'tuvi2b@gmail.com', 'eliyahu.lev@taboola.com']
 
 function Admin() {
   const [user, setUser] = useState(null)
