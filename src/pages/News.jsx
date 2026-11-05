@@ -7,11 +7,14 @@ import Footer from '../components/Footer'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
 
+const PAGE_SIZE = 9
+
 function News() {
   const { language } = useLanguage()
   const t = translations[language]
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -45,28 +48,41 @@ function News() {
           ) : posts.length === 0 ? (
             <div className="no-posts">{t.news.noPosts}</div>
           ) : (
-            <div className="news-grid">
-              {posts.map(post => (
-                <Link to={`/news/${post.id}`} key={post.id} className="news-card">
-                  {post.image && (
-                    <div className="news-card-image">
-                      <img src={post.image} alt={post.title[language] || post.title.he} />
+            <>
+              <div className="news-grid">
+                {posts.slice(0, visibleCount).map(post => (
+                  <Link to={`/news/${post.id}`} key={post.id} className="news-card">
+                    {post.image && (
+                      <div className="news-card-image">
+                        <img src={post.image} alt={post.title[language] || post.title.he} />
+                      </div>
+                    )}
+                    <div className="news-card-content">
+                      <h3 className="news-card-title">
+                        {post.title[language] || post.title.he}
+                      </h3>
+                      <p className="news-card-excerpt">
+                        {post.excerpt[language] || post.excerpt.he}
+                      </p>
+                      <span className="news-card-date">
+                        {post.createdAt?.toDate?.().toLocaleDateString(language === 'he' ? 'he-IL' : 'en-US')}
+                      </span>
                     </div>
-                  )}
-                  <div className="news-card-content">
-                    <h3 className="news-card-title">
-                      {post.title[language] || post.title.he}
-                    </h3>
-                    <p className="news-card-excerpt">
-                      {post.excerpt[language] || post.excerpt.he}
-                    </p>
-                    <span className="news-card-date">
-                      {post.createdAt?.toDate?.().toLocaleDateString(language === 'he' ? 'he-IL' : 'en-US')}
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                  </Link>
+                ))}
+              </div>
+              {visibleCount < posts.length && (
+                <div className="news-load-more">
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    onClick={() => setVisibleCount(count => count + PAGE_SIZE)}
+                  >
+                    {t.news.loadMore}
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>

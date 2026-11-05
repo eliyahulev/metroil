@@ -1303,6 +1303,12 @@
   min-height: calc(100vh - 200px);
 }
 
+.news-load-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
 .loading,
 .no-posts {
   text-align: center;

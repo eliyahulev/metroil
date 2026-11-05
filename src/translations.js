@@ -161,6 +161,7 @@ export const translations = {
       readMore: "קרא עוד",
       latestNews: "חדשות אחרונות",
       viewAll: "לכל החדשות",
+      loadMore: "טען עוד כתבות",
     },
   },
   en: {
@@ -328,6 +329,7 @@ export const translations = {
       readMore: "Read more",
       latestNews: "Latest News",
       viewAll: "View All News",
+      loadMore: "Load more articles",
     },
   },
 };
