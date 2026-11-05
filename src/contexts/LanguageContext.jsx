@@ -10,27 +10,43 @@ export const useLanguage = () => {
   return context
 }
 
+// Only an explicit choice from the switcher is stored, so the domain default
+// applies until the visitor picks a language. (The old 'language' key was
+// written on every visit, so it is ignored.)
+const STORAGE_KEY = 'languageChoice'
+
+// metroisrael.com defaults to English; metroisrael.co.il and everything else to Hebrew.
+const getDomainLanguage = () =>
+  window.location.hostname.endsWith('metroisrael.com') ? 'en' : 'he'
+
+const getSavedLanguage = () => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY)
+    return saved === 'he' || saved === 'en' ? saved : null
+  } catch {
+    return null
+  }
+}
+
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState(() => {
-    const saved = localStorage.getItem('language')
-    return saved || 'he'
-  })
+  const [language, setLanguageState] = useState(() => getSavedLanguage() || getDomainLanguage())
 
   useEffect(() => {
-    localStorage.setItem('language', language)
     document.documentElement.lang = language
     document.documentElement.dir = language === 'he' ? 'rtl' : 'ltr'
   }, [language])
 
-  useEffect(() => {
-    const saved = localStorage.getItem('language')
-    const initialLanguage = saved || 'he'
-    document.documentElement.lang = initialLanguage
-    document.documentElement.dir = initialLanguage === 'he' ? 'rtl' : 'ltr'
-  }, [])
+  const setLanguage = (lang) => {
+    setLanguageState(lang)
+    try {
+      localStorage.setItem(STORAGE_KEY, lang)
+    } catch {
+      // Storage unavailable (private mode etc.) — the choice lasts for this page view only.
+    }
+  }
 
   const toggleLanguage = () => {
-    setLanguage(prev => prev === 'he' ? 'en' : 'he')
+    setLanguage(language === 'he' ? 'en' : 'he')
   }
 
   return (
