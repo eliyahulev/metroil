@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
+import { translations } from '../translations'
 
 const LanguageContext = createContext()
 
@@ -32,8 +33,10 @@ export const LanguageProvider = ({ children }) => {
   const [language, setLanguageState] = useState(() => getSavedLanguage() || getDomainLanguage())
 
   useEffect(() => {
+    const t = translations[language]
     document.documentElement.lang = language
     document.documentElement.dir = language === 'he' ? 'rtl' : 'ltr'
+    document.title = `${t.header.logo} - ${t.home.hero.subtitle}`
   }, [language])
 
   const setLanguage = (lang) => {

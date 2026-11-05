@@ -12,7 +12,7 @@ function Footer() {
       <div className="container">
         <div className="footer-content">
           <p className="footer-copyright">
-            &copy; {t.footer.copyright}
+            &copy; {new Date().getFullYear()} {t.footer.copyright}
           </p>
           <nav className="footer-nav">
             <Link to="/privacy" className="footer-link">

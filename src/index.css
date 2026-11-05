@@ -17,5 +17,36 @@ body {
 
 html {
   scroll-behavior: smooth;
+  scrollbar-color: rgba(255, 107, 53, 0.45) #0a0e27;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+::selection {
+  background: rgba(255, 107, 53, 0.35);
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 2px solid #ff6b35;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
 

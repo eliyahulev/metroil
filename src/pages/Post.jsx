@@ -71,14 +71,20 @@ function Post() {
 
           <header className="post-header">
             <h1 className="post-title">{post.title[language] || post.title.he}</h1>
-            <time className="post-date">
-              {post.createdAt?.toDate?.().toLocaleDateString(language === 'he' ? 'he-IL' : 'en-US')}
-            </time>
+            {post.createdAt?.toDate && (
+              <time className="post-date" dateTime={post.createdAt.toDate().toISOString()}>
+                {post.createdAt.toDate().toLocaleDateString(language === 'he' ? 'he-IL' : 'en-US')}
+              </time>
+            )}
           </header>
 
           {post.image && (
             <div className="post-image">
-              <img src={post.image} alt={post.title[language] || post.title.he} />
+              <img
+                src={post.image}
+                alt={post.title[language] || post.title.he}
+                onError={(e) => { e.currentTarget.parentElement.hidden = true }}
+              />
             </div>
           )}
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { collection, getDocs, query, orderBy } from 'firebase/firestore'
 import { db } from '../firebase'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import NewsCard from '../components/NewsCard'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
 
@@ -51,24 +51,7 @@ function News() {
             <>
               <div className="news-grid">
                 {posts.slice(0, visibleCount).map(post => (
-                  <Link to={`/news/${post.id}`} key={post.id} className="news-card">
-                    {post.image && (
-                      <div className="news-card-image">
-                        <img src={post.image} alt={post.title[language] || post.title.he} />
-                      </div>
-                    )}
-                    <div className="news-card-content">
-                      <h3 className="news-card-title">
-                        {post.title[language] || post.title.he}
-                      </h3>
-                      <p className="news-card-excerpt">
-                        {post.excerpt[language] || post.excerpt.he}
-                      </p>
-                      <span className="news-card-date">
-                        {post.createdAt?.toDate?.().toLocaleDateString(language === 'he' ? 'he-IL' : 'en-US')}
-                      </span>
-                    </div>
-                  </Link>
+                  <NewsCard key={post.id} post={post} />
                 ))}
               </div>
               {visibleCount < posts.length && (

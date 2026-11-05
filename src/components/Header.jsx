@@ -78,8 +78,8 @@ function Header() {
   return (
     <header className="header">
       <div className="container">
-        <Link to="/" onClick={handleLogoClick} style={{ textDecoration: 'none' }}>
-          <h1 className="logo">{t.header.logo}</h1>
+        <Link to="/" onClick={handleLogoClick} className="logo">
+          {t.header.logo}
         </Link>
         <button
           className={`nav-toggle${isMenuOpen ? ' open' : ''}`}
@@ -107,7 +107,7 @@ function Header() {
               </Link>
             )
           ))}
-          <div style={{ paddingTop: '0.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)', marginTop: '0.5rem' }}>
+          <div className="nav-language">
             <LanguageSwitcher />
           </div>
         </nav>

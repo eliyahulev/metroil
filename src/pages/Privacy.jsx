@@ -11,9 +11,9 @@ function Privacy() {
   return (
     <div className="app">
       <Header />
-      <section className="section" style={{ paddingTop: '6rem' }}>
+      <section className="section page-section">
         <div className="container">
-          <h2 className="section-title">{t.privacy.title}</h2>
+          <h1 className="section-title">{t.privacy.title}</h1>
           <div className="info-content">
             {t.privacy.content.map((paragraph, index) => (
               <p key={index}>

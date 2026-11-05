@@ -147,7 +147,7 @@ export const translations = {
       ],
     },
     footer: {
-      copyright: "2024 מטרו ישראל - פרויקט התחבורה הגדול בישראל",
+      copyright: "מטרו ישראל - פרויקט התחבורה הגדול בישראל",
       privacy: "הגדרות פרטיות",
       accessibility: "הגדרות נגישות",
     },
@@ -315,7 +315,7 @@ export const translations = {
       ],
     },
     footer: {
-      copyright: "2024 Metro Israel - Israel's Largest Transportation Project",
+      copyright: "Metro Israel - Israel's Largest Transportation Project",
       privacy: "Privacy Settings",
       accessibility: "Accessibility Settings",
     },

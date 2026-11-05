@@ -60,6 +60,9 @@
 }
 
 .logo {
+  display: inline-block;
+  text-decoration: none;
+  line-height: 1.2;
   font-size: 1.8rem;
   font-weight: 800;
   margin: 0;
@@ -165,8 +168,9 @@
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
+/* 7px gap + 2px bar = 9px between bar centers */
 .nav-toggle.open span:nth-child(1) {
-  transform: translateY(4px) rotate(45deg);
+  transform: translateY(9px) rotate(45deg);
 }
 
 .nav-toggle.open span:nth-child(2) {
@@ -174,13 +178,20 @@
 }
 
 .nav-toggle.open span:nth-child(3) {
-  transform: translateY(-4px) rotate(-45deg);
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+.nav-language {
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .hero {
   position: relative;
   width: 100%;
   min-height: calc(100vh - 80px);
+  min-height: calc(100svh - 80px);
   display: flex;
   align-items: stretch;
   overflow: hidden;
@@ -289,6 +300,20 @@
   margin-top: 1.5rem;
   color: #b8bcc8;
   font-weight: 400;
+}
+
+/* Body copy that follows a section title directly needs to clear its underline */
+.section-title + .info-content {
+  margin-top: 2.5rem;
+}
+
+/* Standalone pages (no hero) start below the sticky header */
+.section.page-section {
+  padding-top: 6rem;
+}
+
+.timeline-summary {
+  margin-top: 4rem;
 }
 
 .content-grid {
@@ -489,8 +514,9 @@
   margin-bottom: 1.5rem;
 }
 
+/* Badge colors match each line on the network map */
 .line-number {
-  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  background: #d76b2d;
   color: #ffffff;
   font-weight: 800;
   font-size: 1.2rem;
@@ -498,7 +524,16 @@
   border-radius: 8px;
   min-width: 60px;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.line-number.line-m1 {
+  background: #1b5ca8;
+}
+
+.line-number.line-m3 {
+  background: #d5af32;
+  color: #0a0e27;
 }
 
 .line-title {
@@ -706,6 +741,32 @@
     font-size: 0.95rem;
   }
 
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1.75rem 0.75rem;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+  }
+
+  .line-card {
+    padding: 1.5rem;
+  }
+
+  .line-header {
+    margin-bottom: 1rem;
+  }
+
   .footer-nav {
     flex-direction: column;
     gap: 0.75rem;
@@ -739,10 +800,10 @@
     align-items: center;
   }
 
-  .nav > div {
-    padding: 0 !important;
-    border: none !important;
-    margin: 0 !important;
+  .nav-language {
+    padding: 0;
+    border: none;
+    margin: 0;
   }
 
   .nav a {
@@ -1081,6 +1142,34 @@
   }
 }
 
+/* Desktop: alternate cards on either side of the center line, markers on it */
+@media (min-width: 769px) {
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    column-gap: 2rem;
+  }
+
+  .timeline-marker {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .timeline-line {
+    display: none;
+  }
+
+  .timeline-left .timeline-content {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .timeline-right .timeline-content {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
+
 /* Contact Form Styles */
 .contact-section {
   background: linear-gradient(135deg, #0f1429 0%, #1a1f3a 100%);
@@ -1226,7 +1315,8 @@
   border: 1px solid rgba(255, 107, 53, 0.15);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 
 .news-card:hover {
@@ -1239,6 +1329,19 @@
   width: 100%;
   height: 200px;
   overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Stand-in when a post has no image or its image fails to load */
+.news-card-image-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 120%, rgba(255, 107, 53, 0.18) 0%, transparent 65%), #121731;
+  color: rgba(255, 107, 53, 0.55);
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
 .news-card-image img {
@@ -1254,6 +1357,9 @@
 
 .news-card-content {
   padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .news-card-title {
@@ -1279,6 +1385,7 @@
   color: #ff6b35;
   font-size: 0.85rem;
   font-weight: 500;
+  margin-top: auto;
 }
 
 .view-all-link {
@@ -1296,6 +1403,14 @@
 .view-all-link:hover {
   color: #f7931e;
   gap: 0.75rem;
+}
+
+.view-all-link::after {
+  content: '\2192';
+}
+
+[dir="rtl"] .view-all-link::after {
+  content: '\2190';
 }
 
 /* News Page Styles */
@@ -1376,16 +1491,18 @@
 
 .post-image {
   width: 100%;
-  max-height: 500px;
+  aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 2rem;
+  background: #121731;
 }
 
 .post-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .post-content {

@@ -17,7 +17,7 @@ function App() {
     <LanguageProvider>
       <Router>
         <ScrollToTop />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div className="app" />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/how-its-done" element={<HowItsDone />} />

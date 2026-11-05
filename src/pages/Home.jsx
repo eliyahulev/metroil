@@ -4,6 +4,7 @@ import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore'
 import { db } from '../firebase'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import NewsCard from '../components/NewsCard'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
 import heroImage from '../assets/hero.jpeg'
@@ -65,7 +66,7 @@ function Home() {
           <img src={heroImage} alt={t.home.hero.alt} className="hero-image" />
           <div className="hero-overlay">
             <div className="hero-content">
-              <h2 className="hero-title">{t.home.hero.title}</h2>
+              <h1 className="hero-title">{t.home.hero.title}</h1>
               <p className="hero-subtitle">{t.home.hero.subtitle}</p>
               <p className="hero-description">
                 {t.home.hero.description}
@@ -137,7 +138,7 @@ function Home() {
             <div className="lines-info">
               <div className="line-card">
                 <div className="line-header">
-                  <span className="line-number">M1</span>
+                  <span className="line-number line-m1">M1</span>
                   <h3 className="line-title">{t.home.lines.line} M1</h3>
                 </div>
                 <div className="line-details">
@@ -149,7 +150,7 @@ function Home() {
               </div>
               <div className="line-card">
                 <div className="line-header">
-                  <span className="line-number">M2</span>
+                  <span className="line-number line-m2">M2</span>
                   <h3 className="line-title">{t.home.lines.line} M2</h3>
                 </div>
                 <div className="line-details">
@@ -161,7 +162,7 @@ function Home() {
               </div>
               <div className="line-card">
                 <div className="line-header">
-                  <span className="line-number">M3</span>
+                  <span className="line-number line-m3">M3</span>
                   <h3 className="line-title">{t.home.lines.line} M3</h3>
                 </div>
                 <div className="line-details">
@@ -214,28 +215,11 @@ function Home() {
             <h2 className="section-title">{t.news.latestNews}</h2>
             <div className="news-grid">
               {posts.map(post => (
-                <Link to={`/news/${post.id}`} key={post.id} className="news-card">
-                  {post.image && (
-                    <div className="news-card-image">
-                      <img src={post.image} alt={post.title[language] || post.title.he} />
-                    </div>
-                  )}
-                  <div className="news-card-content">
-                    <h3 className="news-card-title">
-                      {post.title[language] || post.title.he}
-                    </h3>
-                    <p className="news-card-excerpt">
-                      {post.excerpt[language] || post.excerpt.he}
-                    </p>
-                    <span className="news-card-date">
-                      {post.createdAt?.toDate?.().toLocaleDateString(language === 'he' ? 'he-IL' : 'en-US')}
-                    </span>
-                  </div>
-                </Link>
+                <NewsCard key={post.id} post={post} />
               ))}
             </div>
             <Link to="/news" className="view-all-link">
-              {t.news.viewAll} &rarr;
+              {t.news.viewAll}
             </Link>
           </div>
         </section>
@@ -293,8 +277,8 @@ function Home() {
             <button type="submit" className="submit-btn" disabled={status.submitting}>
               {status.submitting ? t.home.contact.sending : t.home.contact.submit}
             </button>
-            {status.success && <p className="form-message success">{t.home.contact.success}</p>}
-            {status.error && <p className="form-message error">{t.home.contact.error}</p>}
+            {status.success && <p className="form-message success" role="status">{t.home.contact.success}</p>}
+            {status.error && <p className="form-message error" role="alert">{t.home.contact.error}</p>}
           </form>
         </div>
       </section>

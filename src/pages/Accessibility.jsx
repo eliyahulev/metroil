@@ -11,9 +11,9 @@ function Accessibility() {
   return (
     <div className="app">
       <Header />
-      <section className="section" style={{ paddingTop: '6rem' }}>
+      <section className="section page-section">
         <div className="container">
-          <h2 className="section-title">{t.accessibility.title}</h2>
+          <h1 className="section-title">{t.accessibility.title}</h1>
           <div className="info-content">
             {t.accessibility.content.map((paragraph, index) => (
               <p key={index}>

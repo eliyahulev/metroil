@@ -39,9 +39,9 @@ function HowItsDone() {
   return (
     <div className="app">
       <Header />
-      <section className="section timeline-section" style={{ paddingTop: '6rem' }}>
+      <section className="section timeline-section page-section">
         <div className="container">
-          <h2 className="section-title">{t.howItsDone.title}</h2>
+          <h1 className="section-title">{t.howItsDone.title}</h1>
           <p className="section-description">
             {t.howItsDone.description}
           </p>
@@ -59,7 +59,7 @@ function HowItsDone() {
               </div>
             ))}
           </div>
-          <div className="info-content" style={{ marginTop: '4rem' }}>
+          <div className="info-content timeline-summary">
             <p>
               <strong>{t.howItsDone.process.title}</strong> {t.howItsDone.process.text}
             </p>
