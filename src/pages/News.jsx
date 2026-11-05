@@ -38,7 +38,7 @@ function News() {
   return (
     <div className="app">
       <Header />
-      <section className="section news-page">
+      <section className="section page-section news-page">
         <div className="container">
           <h1 className="section-title">{t.news.title}</h1>
           <p className="section-description">{t.news.description}</p>
@@ -49,16 +49,16 @@ function News() {
             <div className="no-posts">{t.news.noPosts}</div>
           ) : (
             <>
-              <div className="news-grid">
+              <div className="tile-grid">
                 {posts.slice(0, visibleCount).map(post => (
-                  <NewsCard key={post.id} post={post} />
+                  <NewsCard key={post.id} post={post} showExcerpt />
                 ))}
               </div>
               {visibleCount < posts.length && (
                 <div className="news-load-more">
                   <button
                     type="button"
-                    className="btn-primary"
+                    className="btn btn-secondary"
                     onClick={() => setVisibleCount(count => count + PAGE_SIZE)}
                   >
                     {t.news.loadMore}

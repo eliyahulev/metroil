@@ -11,13 +11,10 @@ function Header() {
   const location = useLocation()
   const navigate = useNavigate()
   const navItems = [
-    { href: '#project', label: t.header.nav.about },
-    { href: '#project', label: t.header.nav.project },
-    { href: '#stats', label: t.header.nav.stats },
-    { href: '#lines', label: t.header.nav.lines },
-    { href: '#cities', label: t.header.nav.cities },
-    { path: '/how-its-done', label: t.header.nav.howItsDone },
     { path: '/news', label: t.header.nav.news },
+    { href: '#lines', label: t.header.nav.lines },
+    { href: '#project', label: t.header.nav.project },
+    { path: '/how-its-done', label: t.header.nav.howItsDone },
     { href: '#contact', label: t.header.nav.contact },
   ]
 
@@ -76,22 +73,13 @@ function Header() {
   }
 
   return (
-    <header className="header">
-      <div className="container">
+    <header className={`header${isMenuOpen ? ' menu-open' : ''}`}>
+      <div className="container header-bar">
         <Link to="/" onClick={handleLogoClick} className="logo">
+          <span className="logo-mark" aria-hidden="true"><i></i><i></i><i></i></span>
           {t.header.logo}
         </Link>
-        <button
-          className={`nav-toggle${isMenuOpen ? ' open' : ''}`}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-expanded={isMenuOpen}
-          aria-label={t.header.menuLabel}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <nav className={`nav${isMenuOpen ? ' open' : ''}`}>
+        <nav className={`nav${isMenuOpen ? ' open' : ''}`} aria-label={t.header.menuLabel}>
           {navItems.map((item, index) => (
             item.href ? (
               <a
@@ -102,15 +90,35 @@ function Header() {
                 {item.label}
               </a>
             ) : (
-              <Link key={index} to={item.path} onClick={closeMenu}>
+              <Link
+                key={index}
+                to={item.path}
+                onClick={closeMenu}
+                aria-current={location.pathname === item.path ? 'page' : undefined}
+              >
                 {item.label}
               </Link>
             )
           ))}
-          <div className="nav-language">
-            <LanguageSwitcher />
-          </div>
+          <Link to="/news" className="btn btn-primary nav-menu-action" onClick={closeMenu}>
+            {t.header.mainAction}
+          </Link>
         </nav>
+        <div className="header-actions">
+          <LanguageSwitcher />
+          <Link to="/news" className="btn btn-primary header-action" onClick={closeMenu}>
+            {t.header.mainAction}
+          </Link>
+          <button
+            className={`nav-toggle${isMenuOpen ? ' open' : ''}`}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-expanded={isMenuOpen}
+            aria-label={t.header.menuLabel}
+          >
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </div>
     </header>
   )

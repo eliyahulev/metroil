@@ -1,23 +1,95 @@
+/* Direction A: teal on paper. One palette, one type pairing, one spacing and radius scale. */
+:root {
+  --bg: #f7f9f8;
+  --surface: #ebf0ee;
+  --card: #ffffff;
+  --ink: #06525c;
+  --muted: #2f737d;
+  --line: rgba(6, 82, 92, 0.14);
+  --action: #06525c;
+  --action-ink: #f7f9f8;
+
+  --inv-bg: #06525c;
+  --inv-surface: #205d66;
+  --inv-ink: #f7f9f8;
+  --inv-muted: #c1d0d2;
+  --inv-line: rgba(247, 249, 248, 0.18);
+
+  /* the map's own line colours */
+  --m1: #1b5ca8;
+  --m2: #b8541c;
+  --m3: #d5af32;
+
+  --font: "Hanken Grotesk", "Heebo", system-ui, sans-serif;
+  --tracking: -0.03em;
+
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 20px;
+
+  --nav: 72px;
+  --gut: 80px;
+  --padt: 120px;
+  --padb: 72px;
+
+  --t-h1: 72px;
+  --t-h2: 48px;
+  --t-lead: 20px;
+  --t-card: 20px;
+  --t-body: 16px;
+  --t-small: 14px;
+  --t-label: 13px;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 240ms;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --gut: 48px;
+    --t-h1: 56px;
+    --t-h2: 38px;
+  }
+}
+
+@media (max-width: 639px) {
+  :root {
+    --nav: 56px;
+    --gut: 24px;
+    --padt: 96px;
+    --padb: 48px;
+    --t-h1: 40px;
+    --t-h2: 30px;
+    --t-lead: 18px;
+    --t-card: 18px;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav);
+  scrollbar-color: rgba(6, 82, 92, 0.35) var(--bg);
+}
+
 body {
-  font-family: 'Assistant', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  line-height: 1.6;
-  color: #ffffff;
-  background-color: #0a0e27;
+  font-family: var(--font);
+  font-size: var(--t-body);
+  line-height: 1.625;
+  color: var(--ink);
+  background-color: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-html {
-  scroll-behavior: smooth;
-  scrollbar-color: rgba(255, 107, 53, 0.45) #0a0e27;
+img {
+  display: block;
+  max-width: 100%;
 }
 
 button,
@@ -28,12 +100,12 @@ select {
 }
 
 ::selection {
-  background: rgba(255, 107, 53, 0.35);
-  color: #ffffff;
+  background: rgba(6, 82, 92, 0.18);
+  color: var(--ink);
 }
 
 :focus-visible {
-  outline: 2px solid #ff6b35;
+  outline: 2px solid var(--action);
   outline-offset: 3px;
 }
 
@@ -49,4 +121,3 @@ select {
     animation-duration: 0.01ms !important;
   }
 }
-

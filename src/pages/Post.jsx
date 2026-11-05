@@ -35,7 +35,7 @@ function Post() {
     return (
       <div className="app">
         <Header />
-        <section className="section">
+        <section className="section page-section">
           <div className="container">
             <div className="loading">{t.news.loading}</div>
           </div>
@@ -49,7 +49,7 @@ function Post() {
     return (
       <div className="app">
         <Header />
-        <section className="section">
+        <section className="section page-section">
           <div className="container">
             <div className="not-found">
               <h1>{t.news.notFound}</h1>
@@ -65,7 +65,7 @@ function Post() {
   return (
     <div className="app">
       <Header />
-      <article className="section post-page">
+      <article className="section page-section post-page">
         <div className="container">
           <Link to="/news" className="back-link">{t.news.backToNews}</Link>
 

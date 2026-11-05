@@ -9,6 +9,7 @@ import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
 import heroImage from '../assets/hero.jpeg'
 import mapImage from '../assets/map.jpg'
+import cityImage from '../assets/tlv.jpg'
 
 function Home() {
   const { language } = useLanguage()
@@ -61,174 +62,106 @@ function Home() {
   return (
     <div className="app">
       <Header />
-      <section className="hero">
-        <div className="hero-image-wrapper">
-          <img src={heroImage} alt={t.home.hero.alt} className="hero-image" />
-          <div className="hero-overlay">
-            <div className="hero-content">
-              <h1 className="hero-title">{t.home.hero.title}</h1>
-              <p className="hero-subtitle">{t.home.hero.subtitle}</p>
-              <p className="hero-description">
-                {t.home.hero.description}
-              </p>
+
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="container hero-grid">
+          <div className="hero-text">
+            <p className="hero-notice"><span className="dot" aria-hidden="true" />{t.home.hero.notice}</p>
+            <h1 id="hero-title" className="hero-title">{t.home.hero.title}</h1>
+            <p className="hero-lead">{t.home.hero.lead}</p>
+            <div className="btn-row">
+              <Link to="/news" className="btn btn-primary">
+                {t.header.mainAction}
+                <span className="btn-arrow" aria-hidden="true" />
+              </Link>
+              <a href="#lines" className="btn btn-text">{t.home.hero.secondary}</a>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section id="project" className="section">
-        <div className="container">
-          <h2 className="section-title">{t.home.project.title}</h2>
-          <div className="content-grid">
-            <div className="content-card">
-              <h3>{t.home.project.vision.title}</h3>
-              <p>
-                {t.home.project.vision.text}
-              </p>
-            </div>
-            <div className="content-card">
-              <h3>{t.home.project.scope.title}</h3>
-              <p>
-                {t.home.project.scope.text}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="stats" className="section stats-section">
-        <div className="container">
-          <h2 className="section-title">{t.home.stats.title}</h2>
-          <div className="stats-grid">
-            <div className="stat-card">
-              <div className="stat-number">3</div>
-              <div className="stat-label">{t.home.stats.lines}</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">24</div>
-              <div className="stat-label">{t.home.stats.municipalities}</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">300</div>
-              <div className="stat-label">{t.home.stats.tunnels}</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">109</div>
-              <div className="stat-label">{t.home.stats.stations}</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">600M</div>
-              <div className="stat-label">{t.home.stats.trips}</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">65B</div>
-              <div className="stat-label">{t.home.stats.budget}</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="lines" className="section lines-section">
-        <div className="container">
-          <h2 className="section-title">{t.home.lines.title}</h2>
-          <p className="section-description">
-            {t.home.lines.description}
-          </p>
-          <div className="lines-content">
-            <div className="lines-info">
-              <div className="line-card">
-                <div className="line-header">
-                  <span className="line-number line-m1">M1</span>
-                  <h3 className="line-title">{t.home.lines.line} M1</h3>
-                </div>
-                <div className="line-details">
-                  <div className="line-length">
-                    <span className="length-value">85</span>
-                    <span className="length-unit">{t.home.lines.kilometer}</span>
-                  </div>
-                </div>
+          <div className="hero-media">
+            <img src={heroImage} alt={t.home.hero.alt} fetchpriority="high" />
+            <div className="hero-float">
+              <div className="hero-float-row">
+                <span>{t.home.hero.factLabel}</span>
+                <span>{t.home.hero.factValue}</span>
               </div>
-              <div className="line-card">
-                <div className="line-header">
-                  <span className="line-number line-m2">M2</span>
-                  <h3 className="line-title">{t.home.lines.line} M2</h3>
-                </div>
-                <div className="line-details">
-                  <div className="line-length">
-                    <span className="length-value">26</span>
-                    <span className="length-unit">{t.home.lines.kilometer}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="line-card">
-                <div className="line-header">
-                  <span className="line-number line-m3">M3</span>
-                  <h3 className="line-title">{t.home.lines.line} M3</h3>
-                </div>
-                <div className="line-details">
-                  <div className="line-length">
-                    <span className="length-value">39</span>
-                    <span className="length-unit">{t.home.lines.kilometer}</span>
-                  </div>
-                </div>
-              </div>
+              <p className="hero-float-title">{t.home.hero.factTitle}</p>
             </div>
-            <div className="map-container">
-              <img src={mapImage} alt={t.home.lines.mapAlt} className="metro-map" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="cities" className="section">
-        <div className="container">
-          <h2 className="section-title">{t.home.cities.title}</h2>
-          <p className="section-description">
-            {t.home.cities.description}
-          </p>
-          <div className="cities-grid">
-            {t.home.cities.cityList.map((city, index) => (
-              <div key={index} className="city-card">{city}</div>
-            ))}
-            <div className="city-card">{t.home.cities.andMore}</div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section info-section">
-        <div className="container">
-          <h2 className="section-title">{t.home.info.title}</h2>
-          <div className="info-content">
-            <p>
-              {t.home.info.text1}
-            </p>
-            <p>
-              {t.home.info.text2}
-            </p>
           </div>
         </div>
       </section>
 
       {posts.length > 0 && (
-        <section id="news" className="section news-section">
+        <section id="news" className="section section-surface" aria-labelledby="news-title">
           <div className="container">
-            <h2 className="section-title">{t.news.latestNews}</h2>
-            <div className="news-grid">
+            <div className="section-head section-head-row">
+              <div>
+                <h2 id="news-title" className="section-title">{t.home.news.title}</h2>
+                <p className="section-description">{t.home.news.description}</p>
+              </div>
+              <Link to="/news" className="text-link">{t.news.viewAll}</Link>
+            </div>
+            <div className="tile-grid">
               {posts.map(post => (
                 <NewsCard key={post.id} post={post} />
               ))}
             </div>
-            <Link to="/news" className="view-all-link">
-              {t.news.viewAll}
-            </Link>
           </div>
         </section>
       )}
 
-      <section id="contact" className="section contact-section">
-        <div className="container">
-          <h2 className="section-title">{t.home.contact.title}</h2>
-          <p className="section-description">{t.home.contact.description}</p>
+      <section id="lines" className="section" aria-labelledby="lines-title">
+        <div className="container split">
+          <div className="split-text">
+            <div className="section-head">
+              <h2 id="lines-title" className="section-title">{t.home.lines.title}</h2>
+              <p className="section-description">{t.home.lines.description}</p>
+            </div>
+            <ul className="rows">
+              {t.home.lines.items.map(line => (
+                <li key={line.id}>
+                  <span className={`line-badge line-${line.id}`}>{line.name}</span>
+                  <span className="rows-text">{line.text}</span>
+                  <span className="rows-value">{line.km}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="split-media split-media-map">
+            <img src={mapImage} alt={t.home.lines.mapAlt} loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <section id="project" className="section" aria-labelledby="project-title">
+        <div className="container split">
+          <div className="split-text">
+            <div className="section-head">
+              <h2 id="project-title" className="section-title">{t.home.project.title}</h2>
+              <p className="section-description">{t.home.project.description}</p>
+            </div>
+            <ul className="rows rows-spec">
+              {t.home.project.rows.map(([label, value]) => (
+                <li key={label}>
+                  <span className="rows-text">{label}</span>
+                  <span className="rows-value">{value}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="split-media">
+            <img src={cityImage} alt={t.home.project.photoAlt} loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className="section section-surface" aria-labelledby="contact-title">
+        <div className="container split">
+          <div className="split-text">
+            <div className="section-head">
+              <h2 id="contact-title" className="section-title">{t.home.contact.title}</h2>
+              <p className="section-description">{t.home.contact.description}</p>
+            </div>
+          </div>
           <form className="contact-form" onSubmit={handleSubmit}>
             {/* Honeypot field - hidden from users, catches bots */}
             <input
@@ -274,7 +207,7 @@ function Home() {
                 required
               />
             </div>
-            <button type="submit" className="submit-btn" disabled={status.submitting}>
+            <button type="submit" className="btn btn-primary" disabled={status.submitting}>
               {status.submitting ? t.home.contact.sending : t.home.contact.submit}
             </button>
             {status.success && <p className="form-message success" role="status">{t.home.contact.success}</p>}
@@ -283,7 +216,7 @@ function Home() {
         </div>
       </section>
 
-      <Footer />
+      <Footer showClose />
     </div>
   )
 }
