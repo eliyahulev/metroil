@@ -1214,13 +1214,15 @@
 
 /* ---------- Cookie notice ---------- */
 
+/* Sticky at the end of the page, not fixed: it rides along the bottom of the screen while
+   reading, but at the very end it takes its own place below the footer, so it never covers
+   the footer's links (privacy, accessibility, contact). */
 .cookie-notice {
-  position: fixed;
-  inset-inline: 16px;
+  position: sticky;
   bottom: 16px;
   z-index: 200;
-  margin-inline: auto;
-  max-width: 720px;
+  width: min(720px, calc(100% - 32px));
+  margin: 16px auto;
   display: flex;
   align-items: center;
   gap: 16px 24px;

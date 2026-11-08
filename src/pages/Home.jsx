@@ -13,6 +13,8 @@ import { responsiveImage } from '../lib/images'
 import heroImage from '../assets/hero.jpeg'
 import mapImage from '../assets/map.jpg'
 
+const FORMSPREE_URL = 'https://formspree.io/f/mdakqbqj'
+
 // the hero's line bars are drawn to scale against the longest line
 const LONGEST_LINE_KM = 85
 
@@ -44,7 +46,7 @@ function Home() {
     setStatus({ submitting: true, success: false, error: false })
 
     try {
-      const response = await fetch('https://formspree.io/f/mdakqbqj', {
+      const response = await fetch(FORMSPREE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -198,7 +200,9 @@ function Home() {
               <p className="section-description">{t.home.contact.description}</p>
             </div>
           </div>
-          <form className="contact-form" onSubmit={handleSubmit}>
+          {/* action/method: before the page hydrates (or without JS) the form posts to
+              Formspree itself instead of sending the visitor's details as a GET to this page */}
+          <form className="contact-form" action={FORMSPREE_URL} method="POST" onSubmit={handleSubmit}>
             {/* Honeypot field - hidden from users, catches bots */}
             <input
               type="text"

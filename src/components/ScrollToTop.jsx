@@ -11,13 +11,18 @@ function ScrollToTop() {
   const { pathname, hash, key } = useLocation()
   // null on the first run, so a page opened at /#section is treated like an arrival
   const prevPathname = useRef(null)
+  const firstRun = useRef(true)
 
   useEffect(() => {
     const pathChanged = prevPathname.current !== pathname
     prevPathname.current = pathname
+    const isFirstRun = firstRun.current
+    firstRun.current = false
 
     if (!hash) {
-      window.scrollTo({ top: 0, behavior: pathChanged ? 'instant' : 'smooth' })
+      // On the first run the page came from the server: leave the scroll where the browser
+      // put it (restored on reload or Back, or already moved by the reader).
+      if (!isFirstRun) window.scrollTo({ top: 0, behavior: pathChanged ? 'instant' : 'smooth' })
       return
     }
 

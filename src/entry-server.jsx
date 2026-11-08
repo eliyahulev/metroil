@@ -38,9 +38,17 @@ const printTags = (tags) =>
 
 // The web-stream renderer: React 18's Node stream can split a Hebrew letter between
 // chunks and corrupt it. allReady waits for the lazy page, so the HTML holds the whole page.
+// An error inside the page doesn't reject: React swaps in the Suspense fallback and reports
+// it to onError, so it is rethrown here rather than sent as a blank page.
 async function renderApp(element) {
-  const stream = await renderToReadableStream(element)
+  let pageError = null
+  const stream = await renderToReadableStream(element, {
+    onError(error) {
+      pageError ??= error
+    },
+  })
   await stream.allReady
+  if (pageError) throw pageError
   return new Response(stream).text()
 }
 

@@ -16,6 +16,8 @@ const Admin = React.lazy(() => import('./pages/Admin'))
 const NotFound = React.lazy(() => import('./pages/NotFound'))
 
 // The router comes from the entry: BrowserRouter in entry-client, StaticRouter in entry-server.
+// Routes are case-sensitive, like the server's page lookup (src/lib/seo.js), so /News is a
+// 404 in both places instead of a page the server calls missing.
 function App({ initialLanguage, initialData }) {
   return (
     <LanguageProvider initialLanguage={initialLanguage}>
@@ -23,13 +25,13 @@ function App({ initialLanguage, initialData }) {
         <ScrollToTop />
         <Suspense fallback={<div className="app" />}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/how-its-done" element={<HowItsDone />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/accessibility" element={<Accessibility />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/news/:id" element={<Post />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route caseSensitive path="/" element={<Home />} />
+            <Route caseSensitive path="/how-its-done" element={<HowItsDone />} />
+            <Route caseSensitive path="/privacy" element={<Privacy />} />
+            <Route caseSensitive path="/accessibility" element={<Accessibility />} />
+            <Route caseSensitive path="/news" element={<News />} />
+            <Route caseSensitive path="/news/:id" element={<Post />} />
+            <Route caseSensitive path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

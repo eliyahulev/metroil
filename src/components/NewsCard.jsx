@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
@@ -10,6 +10,14 @@ function NewsCard({ post, showExcerpt = false }) {
   const { language } = useLanguage()
   const t = translations[language]
   const [imageFailed, setImageFailed] = useState(false)
+  const imageRef = useRef(null)
+
+  // A server-rendered image can fail before React attaches onError, and React doesn't
+  // replay the event, so check once after hydration.
+  useEffect(() => {
+    const img = imageRef.current
+    if (img && img.complete && img.naturalWidth === 0) setImageFailed(true)
+  }, [])
   const title = localized(post.title, language)
   const date = post.createdAt
 
@@ -18,6 +26,7 @@ function NewsCard({ post, showExcerpt = false }) {
       <div className={`tile-media${!post.image || imageFailed ? ' tile-media-empty' : ''}`}>
         {post.image && !imageFailed ? (
           <img
+            ref={imageRef}
             {...responsiveImage(post.image, '(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 400px', 640)}
             alt=""
             loading="lazy"

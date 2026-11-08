@@ -5,6 +5,11 @@ import { translations } from '../translations'
 
 const SECTIONS = ['news', 'lines', 'project', 'how', 'contact']
 
+// Israel's calendar year on the server (UTC) and in every browser alike, so hydration
+// sees the same number around New Year.
+const currentYear = () =>
+  new Intl.DateTimeFormat('en', { year: 'numeric', timeZone: 'Asia/Jerusalem' }).format(new Date())
+
 function Footer() {
   const { language } = useLanguage()
   const t = translations[language]
@@ -27,8 +32,9 @@ function Footer() {
           </nav>
         </div>
         <div className="footer-legal">
-          <p className="footer-copyright">
-            &copy; {new Date().getFullYear()} {t.footer.copyright}
+          {/* a page cached just before midnight can still disagree; that mismatch is harmless */}
+          <p className="footer-copyright" suppressHydrationWarning>
+            &copy; {currentYear()} {t.footer.copyright}
           </p>
           <nav className="footer-legal-links" aria-label={t.footer.legalLabel}>
             <Link to="/privacy" className="footer-link">{t.footer.privacy}</Link>

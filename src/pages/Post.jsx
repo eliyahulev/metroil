@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -17,7 +17,15 @@ function Post() {
   const initial = useInitialData()
   const [post, setPost] = useState(initial && 'post' in initial ? initial.post : undefined)
   const loading = post === undefined
+  const imageRef = useRef(null)
   usePageMeta({ post })
+
+  // A server-rendered image can fail before React attaches onError, and React doesn't
+  // replay the event, so check once the article is on the page.
+  useEffect(() => {
+    const img = imageRef.current
+    if (img && img.complete && img.naturalWidth === 0) img.parentElement.hidden = true
+  }, [post])
 
   useEffect(() => {
     if (initial && 'post' in initial) {
@@ -83,6 +91,7 @@ function Post() {
           {post.image && (
             <div className="post-image">
               <img
+                ref={imageRef}
                 {...responsiveImage(post.image, '(max-width: 760px) 100vw, 760px', 1280)}
                 fetchpriority="high"
                 alt={localized(post.title, language)}

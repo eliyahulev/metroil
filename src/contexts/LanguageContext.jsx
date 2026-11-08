@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState, useEffect, startTransition } from 'react'
 
 const LanguageContext = createContext()
 
@@ -27,10 +27,12 @@ const getSavedLanguage = () => {
 export const LanguageProvider = ({ initialLanguage, children }) => {
   const [language, setLanguageState] = useState(initialLanguage)
 
-  // after the first render, so the browser's first render matches the server's HTML
+  // After the first render, so the browser's first render matches the server's HTML. As a
+  // transition: an urgent update would reach the page's Suspense boundary before it has
+  // hydrated, and React would throw away the server HTML (a blank page until the chunk loads).
   useEffect(() => {
     const saved = getSavedLanguage()
-    if (saved && saved !== initialLanguage) setLanguageState(saved)
+    if (saved && saved !== initialLanguage) startTransition(() => setLanguageState(saved))
   }, [initialLanguage])
 
   useEffect(() => {
