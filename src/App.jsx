@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { LanguageProvider } from './contexts/LanguageContext'
 import './App.css'
 import ScrollToTop from './components/ScrollToTop'
+import CookieNotice from './components/CookieNotice'
 
 const Home = React.lazy(() => import('./pages/Home'))
 const HowItsDone = React.lazy(() => import('./pages/HowItsDone'))
@@ -28,6 +29,7 @@ function App() {
             <Route path="/admin" element={<Admin />} />
           </Routes>
         </Suspense>
+        <CookieNotice />
       </Router>
     </LanguageProvider>
   )

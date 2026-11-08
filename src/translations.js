@@ -6,7 +6,7 @@ export const translations = {
         news: "חדשות",
         lines: "קווים",
         project: "הפרויקט",
-        howItsDone: "איך זה נעשה",
+        how: "איך זה נעשה",
         contact: "צור קשר",
       },
       menuLabel: "פתח תפריט ניווט",
@@ -14,10 +14,15 @@ export const translations = {
     },
     home: {
       hero: {
-        notice: "פתיחה מתוכננת ב־2037",
         title: "מידע וחדשות על המטרו של גוש דן",
         subtitle: "פרויקט התחבורה הגדול בישראל",
-        lead: "שלושה קווים ו־109 תחנות תת־קרקעיות. מפת הקווים, מצב הפרויקט והחדשות האחרונות, באתר מידע עצמאי.",
+        factsLabel: "המטרו במספרים",
+        stats: [
+          ["פתיחה מתוכננת", "2037"],
+          ["קווים", "3"],
+          ["תחנות תת־קרקעיות", "109"],
+        ],
+        lineDetail: (km, stations) => `${km} ק״מ · ${stations} תחנות`,
         secondary: "ראו את מפת הקווים",
         factLabel: "אורך הרשת",
         factValue: "150 ק״מ",
@@ -32,27 +37,23 @@ export const translations = {
         title: "שלושת קווי המטרו",
         description: "שלושה קווים תת־קרקעיים שיחברו את ערי גוש דן.",
         items: [
-          { id: "m1", name: "M1", text: "צפון–דרום, מהוד השרון ורעננה עד רחובות ולוד", km: "85 ק״מ" },
-          { id: "m2", name: "M2", text: "מזרח–מערב, מפתח תקווה לחולון", km: "26 ק״מ" },
-          { id: "m3", name: "M3", text: "חצי טבעת, מבת ים להרצליה", km: "39 ק״מ" },
+          { id: "m1", name: "M1", text: "צפון–דרום, מהוד השרון ורעננה עד רחובות ולוד", km: 85, stations: 62 },
+          { id: "m2", name: "M2", text: "מזרח–מערב, מפתח תקווה לחולון", km: 26, stations: 22 },
+          { id: "m3", name: "M3", text: "חצי טבעת, מבת ים להרצליה", km: 39, stations: 25 },
         ],
+        km: (km) => `${km} ק״מ`,
         mapAlt: "מפת קווי המטרו M1, ‏M2 ו־M3 בגוש דן",
       },
       project: {
         title: "מצב הפרויקט",
         description: "הנתונים העדכניים על העלות, המכרזים ולוח הזמנים.",
-        rows: [
-          ["עלות מוערכת", "177 מיליארד ש״ח"],
-          ["מכרזי התשתית (אינפרא 1)", "65 מיליארד ש״ח"],
-          ["קבוצות שעברו מיון מוקדם", "19"],
-          ["הודעות הפקעה שנשלחו", "כ־21 אלף"],
-          ["היתר ראשון לתחנה", "אוקטובר 2026"],
+        cost: { label: "עלות מוערכת", value: "177", unit: "מיליארד ש״ח", billions: 177 },
+        tenders: { label: "מכרזי התשתית (אינפרא 1)", value: "65 מיליארד ש״ח", billions: 65 },
+        stats: [
+          ["19", "קבוצות שעברו מיון מוקדם"],
+          ["21 אלף", "הודעות הפקעה שנשלחו, בקירוב"],
+          ["אוק׳ 2026", "היתר ראשון לתחנה"],
         ],
-        photoAlt: "תל אביב מגובה, עם הים ברקע",
-      },
-      close: {
-        title: "כל החדשות על המטרו",
-        text: "אתר מידע עצמאי, ללא קשר לנת״ע או למשרד התחבורה.",
       },
       contact: {
         title: "צור קשר",
@@ -132,9 +133,14 @@ export const translations = {
     footer: {
       copyright: "מטרו ישראל",
       lede: "מידע עצמאי על המטרו של גוש דן.",
-      credit: "תמונת תל אביב: Rubinstein Felix, ויקישיתוף, CC BY-SA 3.0",
       privacy: "הגדרות פרטיות",
       accessibility: "הגדרות נגישות",
+      legalLabel: "מידע משפטי",
+    },
+    cookies: {
+      text: "האתר משתמש בעוגיות של Google Analytics כדי להבין איך משתמשים בו.",
+      more: "מדיניות הפרטיות",
+      accept: "הבנתי",
     },
     news: {
       title: "חדשות ועדכונים",
@@ -156,7 +162,7 @@ export const translations = {
         news: "News",
         lines: "Lines",
         project: "Project",
-        howItsDone: "How it's built",
+        how: "How it's built",
         contact: "Contact",
       },
       menuLabel: "Open navigation menu",
@@ -164,10 +170,15 @@ export const translations = {
     },
     home: {
       hero: {
-        notice: "Planned opening: 2037",
         title: "News and facts on the Gush Dan metro",
         subtitle: "Israel's Largest Transportation Project",
-        lead: "Three lines and 109 underground stations. The line map, where the project stands and the latest news, on an independent information site.",
+        factsLabel: "The metro in numbers",
+        stats: [
+          ["Planned opening", "2037"],
+          ["Lines", "3"],
+          ["Underground stations", "109"],
+        ],
+        lineDetail: (km, stations) => `${km} km · ${stations} stations`,
         secondary: "See the line map",
         factLabel: "Network length",
         factValue: "150 km",
@@ -182,27 +193,23 @@ export const translations = {
         title: "The three metro lines",
         description: "Three underground lines that will connect the cities of Gush Dan.",
         items: [
-          { id: "m1", name: "M1", text: "North–south, from Hod HaSharon and Ra'anana to Rehovot and Lod", km: "85 km" },
-          { id: "m2", name: "M2", text: "East–west, from Petah Tikva to Holon", km: "26 km" },
-          { id: "m3", name: "M3", text: "A half ring, from Bat Yam to Herzliya", km: "39 km" },
+          { id: "m1", name: "M1", text: "North–south, from Hod HaSharon and Ra'anana to Rehovot and Lod", km: 85, stations: 62 },
+          { id: "m2", name: "M2", text: "East–west, from Petah Tikva to Holon", km: 26, stations: 22 },
+          { id: "m3", name: "M3", text: "A half ring, from Bat Yam to Herzliya", km: 39, stations: 25 },
         ],
+        km: (km) => `${km} km`,
         mapAlt: "Map of metro lines M1, M2 and M3 in Gush Dan",
       },
       project: {
         title: "Where the project stands",
         description: "The latest figures on cost, tenders and schedule.",
-        rows: [
-          ["Estimated cost", "₪177 billion"],
-          ["Infrastructure tenders (Infra 1)", "₪65 billion"],
-          ["Groups through prequalification", "19"],
-          ["Expropriation notices sent", "About 21,000"],
-          ["First station permit", "October 2026"],
+        cost: { label: "Estimated cost", value: "₪177", unit: "billion", billions: 177 },
+        tenders: { label: "Infrastructure tenders (Infra 1)", value: "₪65 billion", billions: 65 },
+        stats: [
+          ["19", "Groups through prequalification"],
+          ["21,000", "Expropriation notices sent, approximately"],
+          ["Oct 2026", "First station permit"],
         ],
-        photoAlt: "Tel Aviv from above, with the sea behind",
-      },
-      close: {
-        title: "All the news on the metro",
-        text: "An independent information site, not affiliated with NTA or the Ministry of Transport.",
       },
       contact: {
         title: "Contact Us",
@@ -220,7 +227,7 @@ export const translations = {
       },
     },
     howItsDone: {
-      title: "How It's Done",
+      title: "How it's built",
       description:
         "The construction and implementation process of Israel's largest metro project",
       timeline: {
@@ -283,9 +290,14 @@ export const translations = {
     footer: {
       copyright: "Metro Israel",
       lede: "Independent information on the Gush Dan metro.",
-      credit: "Tel Aviv photo: Rubinstein Felix, Wikimedia Commons, CC BY-SA 3.0",
       privacy: "Privacy Settings",
       accessibility: "Accessibility Settings",
+      legalLabel: "Legal",
+    },
+    cookies: {
+      text: "This site uses Google Analytics cookies to understand how it is used.",
+      more: "Privacy policy",
+      accept: "Got it",
     },
     news: {
       title: "News & Updates",

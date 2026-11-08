@@ -1,19 +1,21 @@
-/* Direction A: teal on paper. One palette, one type pairing, one spacing and radius scale. */
+/* Navy, orange and light grey. One palette, one type pairing, one spacing and radius scale. */
 :root {
-  --bg: #f7f9f8;
-  --surface: #ebf0ee;
+  --bg: #f3f4f6;
+  --surface: #e6e9ef;
   --card: #ffffff;
-  --ink: #06525c;
-  --muted: #2f737d;
-  --line: rgba(6, 82, 92, 0.14);
-  --action: #06525c;
-  --action-ink: #f7f9f8;
+  --ink: #0f2140;
+  --muted: #4b5a73;
+  --line: rgba(15, 33, 64, 0.14);
+  --action: #c2410c;
+  --action-hover: #9a3412;
+  --action-ink: #ffffff;
+  --accent: #f26b1d;
 
-  --inv-bg: #06525c;
-  --inv-surface: #205d66;
-  --inv-ink: #f7f9f8;
-  --inv-muted: #c1d0d2;
-  --inv-line: rgba(247, 249, 248, 0.18);
+  --inv-bg: #0f2140;
+  --inv-surface: #1c3157;
+  --inv-ink: #f3f4f6;
+  --inv-muted: #b4bdcc;
+  --inv-line: rgba(243, 244, 246, 0.18);
 
   /* the map's own line colours */
   --m1: #1b5ca8;
@@ -74,7 +76,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--nav);
-  scrollbar-color: rgba(6, 82, 92, 0.35) var(--bg);
+  scrollbar-color: rgba(15, 33, 64, 0.35) var(--bg);
 }
 
 body {
@@ -100,8 +102,8 @@ select {
 }
 
 ::selection {
-  background: rgba(6, 82, 92, 0.18);
-  color: var(--ink);
+  background: #fdba74;
+  color: #0f2140;
 }
 
 :focus-visible {

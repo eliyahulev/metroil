@@ -5,15 +5,19 @@ import { db } from '../firebase'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import NewsCard from '../components/NewsCard'
+import HowSteps from '../components/HowSteps'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
 import heroImage from '../assets/hero.jpeg'
 import mapImage from '../assets/map.jpg'
-import cityImage from '../assets/tlv.jpg'
+
+// the hero's line bars are drawn to scale against the longest line
+const LONGEST_LINE_KM = 85
 
 function Home() {
   const { language } = useLanguage()
   const t = translations[language]
+  const { cost, tenders } = t.home.project
 
   const [posts, setPosts] = useState([])
 
@@ -66,11 +70,30 @@ function Home() {
       <section className="hero" aria-labelledby="hero-title">
         <div className="container hero-grid">
           <div className="hero-text">
-            <p className="hero-notice"><span className="dot" aria-hidden="true" />{t.home.hero.notice}</p>
             <h1 id="hero-title" className="hero-title">{t.home.hero.title}</h1>
-            <p className="hero-lead">{t.home.hero.lead}</p>
+            <div className="hero-facts" role="group" aria-label={t.home.hero.factsLabel}>
+              <dl className="hero-stats">
+                {t.home.hero.stats.map(([label, value]) => (
+                  <div key={label}>
+                    <dt>{label}</dt>
+                    <dd>{value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <ul className="hero-lines">
+                {t.home.lines.items.map(line => (
+                  <li key={line.id}>
+                    <span className={`line-badge line-${line.id}`}>{line.name}</span>
+                    <span className="hero-line-track" aria-hidden="true">
+                      <span className={`hero-line-bar line-${line.id}`} style={{ inlineSize: `${(line.km / LONGEST_LINE_KM) * 100}%` }} />
+                    </span>
+                    <span className="hero-line-value">{t.home.hero.lineDetail(line.km, line.stations)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
             <div className="btn-row">
-              <Link to="/news" className="btn btn-primary">
+              <Link to="/#news" className="btn btn-primary">
                 {t.header.mainAction}
                 <span className="btn-arrow" aria-hidden="true" />
               </Link>
@@ -90,24 +113,23 @@ function Home() {
         </div>
       </section>
 
-      {posts.length > 0 && (
-        <section id="news" className="section section-surface" aria-labelledby="news-title">
-          <div className="container">
-            <div className="section-head section-head-row">
-              <div>
-                <h2 id="news-title" className="section-title">{t.home.news.title}</h2>
-                <p className="section-description">{t.home.news.description}</p>
-              </div>
-              <Link to="/news" className="text-link">{t.news.viewAll}</Link>
+      {/* always rendered, so the News link has somewhere to land; the tiles arrive from Firestore */}
+      <section id="news" className="section section-surface" aria-labelledby="news-title">
+        <div className="container">
+          <div className="section-head section-head-row">
+            <div>
+              <h2 id="news-title" className="section-title">{t.home.news.title}</h2>
+              <p className="section-description">{t.home.news.description}</p>
             </div>
-            <div className="tile-grid">
-              {posts.map(post => (
-                <NewsCard key={post.id} post={post} />
-              ))}
-            </div>
+            <Link to="/news" className="text-link">{t.news.viewAll}</Link>
           </div>
-        </section>
-      )}
+          <div className="tile-grid">
+            {posts.map(post => (
+              <NewsCard key={post.id} post={post} />
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section id="lines" className="section" aria-labelledby="lines-title">
         <div className="container split">
@@ -121,7 +143,7 @@ function Home() {
                 <li key={line.id}>
                   <span className={`line-badge line-${line.id}`}>{line.name}</span>
                   <span className="rows-text">{line.text}</span>
-                  <span className="rows-value">{line.km}</span>
+                  <span className="rows-value">{t.home.lines.km(line.km)}</span>
                 </li>
               ))}
             </ul>
@@ -132,25 +154,41 @@ function Home() {
         </div>
       </section>
 
-      <section id="project" className="section" aria-labelledby="project-title">
-        <div className="container split">
-          <div className="split-text">
-            <div className="section-head">
-              <h2 id="project-title" className="section-title">{t.home.project.title}</h2>
-              <p className="section-description">{t.home.project.description}</p>
+      <section id="project" className="section section-surface" aria-labelledby="project-title">
+        <div className="container">
+          <div className="section-head">
+            <h2 id="project-title" className="section-title">{t.home.project.title}</h2>
+            <p className="section-description">{t.home.project.description}</p>
+          </div>
+          <div className="project-board">
+            <div className="project-cost">
+              <p className="project-label">{cost.label}</p>
+              <p className="project-figure">{cost.value} <span>{cost.unit}</span></p>
+              <div className="project-bar" aria-hidden="true">
+                <span style={{ inlineSize: `${(tenders.billions / cost.billions) * 100}%` }} />
+              </div>
+              <p className="project-legend">
+                <span className="project-swatch" aria-hidden="true" />
+                {tenders.label}: <strong>{tenders.value}</strong>
+              </p>
             </div>
-            <ul className="rows rows-spec">
-              {t.home.project.rows.map(([label, value]) => (
-                <li key={label}>
-                  <span className="rows-text">{label}</span>
-                  <span className="rows-value">{value}</span>
-                </li>
-              ))}
-            </ul>
+            {t.home.project.stats.map(([value, label]) => (
+              <div key={label} className="project-stat">
+                <p className="project-figure">{value}</p>
+                <p className="project-label">{label}</p>
+              </div>
+            ))}
           </div>
-          <div className="split-media">
-            <img src={cityImage} alt={t.home.project.photoAlt} loading="lazy" />
+        </div>
+      </section>
+
+      <section id="how" className="section" aria-labelledby="how-title">
+        <div className="container">
+          <div className="section-head">
+            <h2 id="how-title" className="section-title">{t.howItsDone.title}</h2>
+            <p className="section-description">{t.howItsDone.description}</p>
           </div>
+          <HowSteps />
         </div>
       </section>
 
@@ -216,7 +254,7 @@ function Home() {
         </div>
       </section>
 
-      <Footer showClose />
+      <Footer />
     </div>
   )
 }

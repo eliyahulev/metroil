@@ -11,18 +11,18 @@ export const useLanguage = () => {
   return context
 }
 
-// Only an explicit choice from the switcher is stored, so the domain default
-// applies until the visitor picks a language. (The old 'language' key was
-// written on every visit, so it is ignored.)
+// Every visit starts in the domain's language; a choice from the switcher lasts for
+// the rest of that visit only (sessionStorage), so metroisrael.com always opens in English.
 const STORAGE_KEY = 'languageChoice'
 
 // metroisrael.com defaults to English; metroisrael.co.il and everything else to Hebrew.
+// index.html applies the same rule to <html lang/dir> before the app loads.
 const getDomainLanguage = () =>
   window.location.hostname.endsWith('metroisrael.com') ? 'en' : 'he'
 
 const getSavedLanguage = () => {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY)
+    const saved = sessionStorage.getItem(STORAGE_KEY)
     return saved === 'he' || saved === 'en' ? saved : null
   } catch {
     return null
@@ -42,9 +42,9 @@ export const LanguageProvider = ({ children }) => {
   const setLanguage = (lang) => {
     setLanguageState(lang)
     try {
-      localStorage.setItem(STORAGE_KEY, lang)
+      sessionStorage.setItem(STORAGE_KEY, lang)
     } catch {
-      // Storage unavailable (private mode etc.) — the choice lasts for this page view only.
+      // Storage unavailable: the choice lasts for this page view only.
     }
   }
 

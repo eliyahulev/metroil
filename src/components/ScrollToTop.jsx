@@ -1,76 +1,67 @@
 import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
+// How long a section link keeps its target in view while the page above it is still
+// loading (the lazy page chunk, then the news tiles).
+const SETTLE_MS = 2500
+
+// Runs on every navigation (location.key), so clicking the same link twice still scrolls.
+// With a hash it scrolls to that section; without one, to the top.
 function ScrollToTop() {
-  const { pathname, hash } = useLocation()
-  const prevPathname = useRef(pathname)
-  const prevHash = useRef(hash)
-  const scrollTimeoutRef = useRef(null)
+  const { pathname, hash, key } = useLocation()
+  // null on the first run, so a page opened at /#section is treated like an arrival
+  const prevPathname = useRef(null)
 
   useEffect(() => {
     const pathChanged = prevPathname.current !== pathname
-    const hashChanged = prevHash.current !== hash
-    
-    if (scrollTimeoutRef.current) {
-      clearTimeout(scrollTimeoutRef.current)
-    }
-    
-    if (hash) {
-      const scrollToElement = (instant = false) => {
-        const element = document.querySelector(hash)
-        if (element) {
-          const headerOffset = 80
-          const elementTop = element.getBoundingClientRect().top + window.pageYOffset
-          const offsetPosition = elementTop - headerOffset
-          
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: instant ? 'instant' : 'smooth'
-          })
-          return true
-        }
-        return false
-      }
+    prevPathname.current = pathname
 
+    if (!hash) {
+      window.scrollTo({ top: 0, behavior: pathChanged ? 'instant' : 'smooth' })
+      return
+    }
+
+    let target = null
+    let userScrolled = false
+    let observer = null
+    const started = Date.now()
+
+    // scroll-padding-top on <html> keeps the section clear of the sticky header
+    const align = (behavior) => target.scrollIntoView({ block: 'start', behavior })
+
+    // The visitor takes over: stop correcting the position.
+    const stop = () => { userScrolled = true }
+    window.addEventListener('wheel', stop, { passive: true })
+    window.addEventListener('touchstart', stop, { passive: true })
+    window.addEventListener('keydown', stop)
+
+    const find = setInterval(() => {
+      target = document.getElementById(hash.slice(1))
+      if (!target && Date.now() - started < SETTLE_MS) return
+      clearInterval(find)
+      if (!target) return
+
+      align(pathChanged ? 'instant' : 'smooth')
+
+      // Content loading above the section pushes it down; follow it until things settle.
       if (pathChanged) {
-        scrollToElement(true)
-        scrollTimeoutRef.current = setTimeout(() => {
-          scrollToElement(false)
-        }, 50)
-      } else {
-        scrollToElement(false)
+        observer = new ResizeObserver(() => {
+          if (!userScrolled && Date.now() - started < SETTLE_MS) align('instant')
+        })
+        observer.observe(document.body)
       }
+    }, 30)
 
-      let attempts = 0
-      const maxAttempts = 30
-      const interval = setInterval(() => {
-        attempts++
-        if (scrollToElement(false) || attempts >= maxAttempts) {
-          clearInterval(interval)
-        }
-      }, 50)
-      
-      prevPathname.current = pathname
-      prevHash.current = hash
-      
-      return () => {
-        clearInterval(interval)
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current)
-        }
-      }
-    } else if (pathChanged && !hash) {
-      window.scrollTo({ top: 0, behavior: 'instant' })
-      prevPathname.current = pathname
-      prevHash.current = hash
-    } else {
-      prevPathname.current = pathname
-      prevHash.current = hash
+    return () => {
+      clearInterval(find)
+      observer?.disconnect()
+      window.removeEventListener('wheel', stop)
+      window.removeEventListener('touchstart', stop)
+      window.removeEventListener('keydown', stop)
     }
-  }, [pathname, hash])
+  }, [pathname, hash, key])
 
   return null
 }
 
 export default ScrollToTop
-
