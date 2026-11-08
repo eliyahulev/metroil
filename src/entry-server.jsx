@@ -1,6 +1,5 @@
 import React from 'react'
-import { renderToPipeableStream } from 'react-dom/server'
-import { Writable } from 'node:stream'
+import { renderToReadableStream } from 'react-dom/server.browser'
 import { StaticRouter } from 'react-router'
 import App from './App.jsx'
 import { languageForHost, ORIGINS } from './lib/site'
@@ -37,23 +36,12 @@ const printTags = (tags) =>
     })
     .join('\n    ')
 
-function renderApp(element) {
-  return new Promise((resolve, reject) => {
-    let html = ''
-    const sink = new Writable({
-      write(chunk, _encoding, callback) {
-        html += chunk
-        callback()
-      },
-    })
-    sink.on('finish', () => resolve(html))
-    const stream = renderToPipeableStream(element, {
-      // wait for the lazy page, so the HTML holds the whole page
-      onAllReady: () => stream.pipe(sink),
-      onShellError: reject,
-      onError: reject,
-    })
-  })
+// The web-stream renderer: React 18's Node stream can split a Hebrew letter between
+// chunks and corrupt it. allReady waits for the lazy page, so the HTML holds the whole page.
+async function renderApp(element) {
+  const stream = await renderToReadableStream(element)
+  await stream.allReady
+  return new Response(stream).text()
 }
 
 // Returns the pieces api/render.js puts into the built index.html.
