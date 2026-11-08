@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import { translations } from '../translations'
 
 const LanguageContext = createContext()
 
@@ -11,14 +10,10 @@ export const useLanguage = () => {
   return context
 }
 
-// Every visit starts in the domain's language; a choice from the switcher lasts for
-// the rest of that visit only (sessionStorage), so metroisrael.com always opens in English.
+// Every visit starts in the domain's language (initialLanguage, the same on the server
+// and in the browser); a choice from the switcher lasts for the rest of that visit only
+// (sessionStorage), so metroisrael.com always opens in English.
 const STORAGE_KEY = 'languageChoice'
-
-// metroisrael.com defaults to English; metroisrael.co.il and everything else to Hebrew.
-// index.html applies the same rule to <html lang/dir> before the app loads.
-const getDomainLanguage = () =>
-  window.location.hostname.endsWith('metroisrael.com') ? 'en' : 'he'
 
 const getSavedLanguage = () => {
   try {
@@ -29,14 +24,18 @@ const getSavedLanguage = () => {
   }
 }
 
-export const LanguageProvider = ({ children }) => {
-  const [language, setLanguageState] = useState(() => getSavedLanguage() || getDomainLanguage())
+export const LanguageProvider = ({ initialLanguage, children }) => {
+  const [language, setLanguageState] = useState(initialLanguage)
+
+  // after the first render, so the browser's first render matches the server's HTML
+  useEffect(() => {
+    const saved = getSavedLanguage()
+    if (saved && saved !== initialLanguage) setLanguageState(saved)
+  }, [initialLanguage])
 
   useEffect(() => {
-    const t = translations[language]
     document.documentElement.lang = language
     document.documentElement.dir = language === 'he' ? 'rtl' : 'ltr'
-    document.title = `${t.header.logo} - ${t.home.hero.subtitle}`
   }, [language])
 
   const setLanguage = (lang) => {
@@ -58,4 +57,3 @@ export const LanguageProvider = ({ children }) => {
     </LanguageContext.Provider>
   )
 }
-

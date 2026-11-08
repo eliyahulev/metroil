@@ -2,32 +2,39 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
+import { formatDate, localized } from '../lib/posts'
+import { responsiveImage } from '../lib/images'
 
 // An open tile: the photograph, then the date and the headline on the page ground.
 function NewsCard({ post, showExcerpt = false }) {
   const { language } = useLanguage()
   const t = translations[language]
   const [imageFailed, setImageFailed] = useState(false)
-  const title = post.title[language] || post.title.he
-  const date = post.createdAt?.toDate?.()
+  const title = localized(post.title, language)
+  const date = post.createdAt
 
   return (
     <Link to={`/news/${post.id}`} className="tile">
       <div className={`tile-media${!post.image || imageFailed ? ' tile-media-empty' : ''}`}>
         {post.image && !imageFailed ? (
-          <img src={post.image} alt="" loading="lazy" onError={() => setImageFailed(true)} />
+          <img
+            {...responsiveImage(post.image, '(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 400px', 640)}
+            alt=""
+            loading="lazy"
+            onError={() => setImageFailed(true)}
+          />
         ) : (
           <span aria-hidden="true">{t.header.logo}</span>
         )}
       </div>
       {date && (
         <time className="tile-date" dateTime={date.toISOString()}>
-          {date.toLocaleDateString(language === 'he' ? 'he-IL' : 'en-US')}
+          {formatDate(date, language)}
         </time>
       )}
       <h3 className="tile-title">{title}</h3>
       {showExcerpt && (
-        <p className="tile-excerpt">{post.excerpt[language] || post.excerpt.he}</p>
+        <p className="tile-excerpt">{localized(post.excerpt, language)}</p>
       )}
     </Link>
   )

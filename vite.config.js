@@ -2,10 +2,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react()],
   base: "/",
   build: {
+    // the server build (ssr/) needs no copy of public/
+    copyPublicDir: !isSsrBuild,
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -26,4 +28,4 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 1000,
   },
-});
+}));

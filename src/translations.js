@@ -137,6 +137,41 @@ export const translations = {
       accessibility: "הגדרות נגישות",
       legalLabel: "מידע משפטי",
     },
+    seo: {
+      siteName: "מטרו ישראל",
+      titleSuffix: " | מטרו ישראל",
+      imageAlt: "רכבת מטרו בתחנה תת־קרקעית, הדמיה",
+      home: {
+        title: "מטרו ישראל – מידע וחדשות על המטרו של גוש דן",
+        description: "מידע עצמאי על המטרו של גוש דן: הקווים M1, ‏M2 ו־M3, ‏109 תחנות תת־קרקעיות, מצב הפרויקט, לוח הזמנים והחדשות האחרונות.",
+        crumb: "דף הבית",
+      },
+      news: {
+        title: "חדשות המטרו של גוש דן | מטרו ישראל",
+        description: "החדשות האחרונות על המטרו של גוש דן: מכרזים, היתרים, הפקעות והעבודות בשטח בקווים M1, ‏M2 ו־M3.",
+        crumb: "חדשות",
+      },
+      howItsDone: {
+        title: "איך בונים את המטרו של גוש דן | מטרו ישראל",
+        description: "שלבי הבנייה של המטרו של גוש דן: תכנון ואישורים, מכרזי הענק הבין־לאומיים, תחילת העבודות והפעלת הקווים.",
+      },
+      privacy: {
+        title: "מדיניות פרטיות | מטרו ישראל",
+        description: "מדיניות הפרטיות של מטרו ישראל: איזה מידע נאסף באתר, איך הוא משמש ואיך ניתן לפנות אלינו.",
+      },
+      accessibility: {
+        title: "הצהרת נגישות | מטרו ישראל",
+        description: "הצהרת הנגישות של מטרו ישראל: התאמות הנגישות באתר ודרכים לדווח על בעיית נגישות.",
+      },
+      notFound: {
+        title: "הדף לא נמצא | מטרו ישראל",
+      },
+    },
+    notFound: {
+      title: "הדף לא נמצא",
+      text: "ייתכן שהקישור שגוי או שהדף הוסר.",
+      home: "לדף הבית",
+    },
     cookies: {
       text: "האתר משתמש בעוגיות של Google Analytics כדי להבין איך משתמשים בו.",
       more: "מדיניות הפרטיות",
@@ -293,6 +328,41 @@ export const translations = {
       privacy: "Privacy Settings",
       accessibility: "Accessibility Settings",
       legalLabel: "Legal",
+    },
+    seo: {
+      siteName: "Metro Israel",
+      titleSuffix: " | Metro Israel",
+      imageAlt: "A metro train at an underground station, rendering",
+      home: {
+        title: "Metro Israel – News and facts on the Gush Dan metro",
+        description: "Independent information on the Tel Aviv (Gush Dan) metro: lines M1, M2 and M3, 109 underground stations, project status, schedule and the latest news.",
+        crumb: "Home",
+      },
+      news: {
+        title: "Gush Dan metro news | Metro Israel",
+        description: "The latest news on the Tel Aviv (Gush Dan) metro: tenders, permits, expropriations and work on the ground on lines M1, M2 and M3.",
+        crumb: "News",
+      },
+      howItsDone: {
+        title: "How the Gush Dan metro is being built | Metro Israel",
+        description: "How the Tel Aviv (Gush Dan) metro is being built: planning and approvals, the international mega tenders, construction and opening the lines.",
+      },
+      privacy: {
+        title: "Privacy policy | Metro Israel",
+        description: "Metro Israel's privacy policy: what information the site collects, how it is used and how to contact us.",
+      },
+      accessibility: {
+        title: "Accessibility statement | Metro Israel",
+        description: "Metro Israel's accessibility statement: the site's accessibility features and how to report an accessibility problem.",
+      },
+      notFound: {
+        title: "Page not found | Metro Israel",
+      },
+    },
+    notFound: {
+      title: "Page not found",
+      text: "The link may be wrong, or the page may have been removed.",
+      home: "Go to the home page",
     },
     cookies: {
       text: "This site uses Google Analytics cookies to understand how it is used.",

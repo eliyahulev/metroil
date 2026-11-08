@@ -1084,6 +1084,10 @@
   margin-bottom: 24px;
 }
 
+.not-found p {
+  margin-bottom: 24px;
+}
+
 /* How it's built: numbered steps as ruled rows */
 .timeline {
   list-style: none;

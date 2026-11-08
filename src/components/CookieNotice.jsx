@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
@@ -17,7 +17,9 @@ const wasDismissed = () => {
 function CookieNotice() {
   const { language } = useLanguage()
   const t = translations[language].cookies
-  const [open, setOpen] = useState(() => !wasDismissed())
+  // decided after the first render: the server can't know, and the first render must match it
+  const [open, setOpen] = useState(false)
+  useEffect(() => setOpen(!wasDismissed()), [])
 
   if (!open) return null
 

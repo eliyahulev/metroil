@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore'
-import { db } from '../firebase'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import NewsCard from '../components/NewsCard'
 import HowSteps from '../components/HowSteps'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
+import { useInitialData } from '../contexts/InitialData'
+import { usePageMeta } from '../hooks/usePageMeta'
+import { fetchPosts } from '../lib/posts'
+import { responsiveImage } from '../lib/images'
 import heroImage from '../assets/hero.jpeg'
 import mapImage from '../assets/map.jpg'
 
@@ -19,19 +21,15 @@ function Home() {
   const t = translations[language]
   const { cost, tenders } = t.home.project
 
-  const [posts, setPosts] = useState([])
+  const initial = useInitialData()
+  const [posts, setPosts] = useState(initial?.posts ?? [])
+  usePageMeta()
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(3))
-        const snapshot = await getDocs(q)
-        setPosts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })))
-      } catch (error) {
-        console.error('Error fetching posts:', error)
-      }
-    }
-    fetchPosts()
+    if (initial?.posts) return
+    fetchPosts(3)
+      .then(setPosts)
+      .catch(error => console.error('Error fetching posts:', error))
   }, [])
 
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
@@ -101,7 +99,7 @@ function Home() {
             </div>
           </div>
           <div className="hero-media">
-            <img src={heroImage} alt={t.home.hero.alt} fetchpriority="high" />
+            <img {...responsiveImage(heroImage, '(max-width: 1023px) 100vw, 50vw', 1280)} alt={t.home.hero.alt} width="1600" height="627" fetchpriority="high" />
             <div className="hero-float">
               <div className="hero-float-row">
                 <span>{t.home.hero.factLabel}</span>
@@ -149,7 +147,7 @@ function Home() {
             </ul>
           </div>
           <div className="split-media split-media-map">
-            <img src={mapImage} alt={t.home.lines.mapAlt} loading="lazy" />
+            <img {...responsiveImage(mapImage, '(max-width: 1023px) 100vw, 40vw', 640)} alt={t.home.lines.mapAlt} width="632" height="1164" loading="lazy" />
           </div>
         </div>
       </section>

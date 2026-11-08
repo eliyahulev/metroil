@@ -1,38 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import { collection, getDocs, query, orderBy } from 'firebase/firestore'
-import { db } from '../firebase'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import NewsCard from '../components/NewsCard'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
+import { useInitialData } from '../contexts/InitialData'
+import { usePageMeta } from '../hooks/usePageMeta'
+import { fetchPosts } from '../lib/posts'
 
 const PAGE_SIZE = 9
 
 function News() {
   const { language } = useLanguage()
   const t = translations[language]
-  const [posts, setPosts] = useState([])
-  const [loading, setLoading] = useState(true)
+  const initial = useInitialData()
+  const [posts, setPosts] = useState(initial?.posts ?? [])
+  const [loading, setLoading] = useState(!initial?.posts)
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+  usePageMeta()
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'))
-        const snapshot = await getDocs(q)
-        const postsData = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }))
-        setPosts(postsData)
-      } catch (error) {
-        console.error('Error fetching posts:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
+    if (initial?.posts) return
     fetchPosts()
+      .then(setPosts)
+      .catch(error => console.error('Error fetching posts:', error))
+      .finally(() => setLoading(false))
   }, [])
 
   return (

@@ -3,10 +3,12 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 function Privacy() {
   const { language } = useLanguage()
   const t = translations[language]
+  usePageMeta()
 
   return (
     <div className="app">

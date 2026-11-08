@@ -7,14 +7,6 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#f3f4f6" />
-    <script>
-      // The domain picks the starting language before the app loads (same rule as LanguageContext).
-      if (location.hostname.endsWith('metroisrael.com')) {
-        document.documentElement.lang = 'en';
-        document.documentElement.dir = 'ltr';
-        document.title = 'Metro Israel - Israel\'s Largest Transportation Project';
-      }
-    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-L6HHL47LYM"></script>
@@ -27,11 +19,13 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&family=Heebo:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- the fonts load without holding up the first paint; system fonts show until they arrive -->
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&family=Heebo:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&family=Heebo:wght@400;500&display=swap" rel="stylesheet" /></noscript>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/src/entry-client.jsx"></script>
   </body>
 </html>
 
